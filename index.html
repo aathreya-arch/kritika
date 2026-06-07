@@ -6,267 +6,393 @@
 <title>Soul Records — Kritika Khurana</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Gloock:ital@0;1&family=Plus+Jakarta+Sans:wght@200;300;400&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --gold:#c9a84c;
-  --gold-bright:#e8c97a;
-  --gold-pale:#f0dfa0;
-  --gold-dark:#7a5c1e;
-  --gold-dim:rgba(201,168,76,0.15);
-  --gold-mid:rgba(201,168,76,0.3);
-  --cream:#f0e8d4;
+  --g:#c8a45a;
+  --gb:#e8c97a;
+  --gp:#f4e4a8;
+  --gd:#7a5820;
+  --gx:rgba(200,164,90,0.14);
+  --gm:rgba(200,164,90,0.28);
+  --cr:#ede4d0;
+  --bg:#040200;
 }
 html{scroll-behavior:smooth}
-body{
-  background:#050301;
-  color:var(--cream);
-  font-family:'Jost',sans-serif;
-  font-weight:300;
-  cursor:none;
-  overflow-x:hidden;
+body{background:var(--bg);color:var(--cr);font-family:'Plus Jakarta Sans',sans-serif;font-weight:300;cursor:none;overflow-x:hidden}
+
+/* ── cursor ── */
+#cd{position:fixed;width:5px;height:5px;background:var(--g);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%)}
+#cr{position:fixed;width:26px;height:26px;border:1px solid rgba(200,164,90,.45);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:left .22s cubic-bezier(.25,.46,.45,.94),top .22s cubic-bezier(.25,.46,.45,.94)}
+
+/* ── progress ── */
+#pb{position:fixed;top:0;left:0;height:1px;background:linear-gradient(90deg,transparent,var(--g),var(--gb),var(--g));box-shadow:0 0 6px var(--g);z-index:9999;width:0;transition:width .08s linear}
+
+/* ── grain ── */
+#gr{position:fixed;inset:0;opacity:.035;pointer-events:none;z-index:9990;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");animation:grn .9s steps(2) infinite}
+@keyframes grn{0%{transform:translate(0)}50%{transform:translate(-1%,1%)}}
+
+/* ── motes ── */
+.dw{position:fixed;inset:0;pointer-events:none;z-index:8}
+.mo{position:absolute;border-radius:50%;background:var(--g);opacity:0;animation:mo var(--d,10s) var(--dl,0s) infinite ease-in-out}
+@keyframes mo{0%{opacity:0;transform:translateY(0) translateX(0)}15%{opacity:.18}85%{opacity:.05}100%{opacity:0;transform:translateY(-100vh) translateX(var(--tx,40px))}}
+
+/* ── flash ── */
+#fl{position:fixed;inset:0;background:radial-gradient(ellipse at center,#fff8e0,#f0d070 35%,transparent 70%);opacity:0;pointer-events:none;z-index:490;will-change:opacity}
+
+/* ═══════════════════════════════
+   ACT 1 — HERO
+═══════════════════════════════ */
+#a1{height:300vh;position:relative}
+#a1s{position:sticky;top:0;height:100vh;overflow:hidden}
+#cv{position:absolute;inset:0;width:100%;height:100%}
+
+/* HERO CONTENT */
+#hc{
+  position:absolute;inset:0;z-index:20;
+  display:flex;flex-direction:column;
+  justify-content:center;
+  padding:0 clamp(28px,7vw,120px);
+  will-change:opacity,transform;
+}
+.hline{overflow:hidden}
+.hline-inner{display:block;transform:translateY(110%);opacity:0;transition:transform 1.2s cubic-bezier(.16,1,.3,1),opacity 1.2s ease}
+.hline-inner.up{transform:translateY(0);opacity:1}
+
+.h-eye{
+  font-family:'Cinzel',serif;
+  font-size:clamp(.55rem,.75vw,.72rem);
+  letter-spacing:.45em;color:var(--g);
+  text-transform:uppercase;opacity:.75;
+}
+.h-title{
+  font-family:'Gloock',serif;
+  font-size:clamp(5rem,14vw,13rem);
+  font-weight:400;color:#fff;
+  line-height:.88;
+  letter-spacing:-.01em;
+}
+.h-title em{font-style:italic;color:var(--gb)}
+.h-rule{
+  width:clamp(60px,8vw,120px);height:1px;
+  background:linear-gradient(90deg,var(--g),transparent);
+  margin:clamp(18px,3vh,32px) 0;
+  transform:scaleX(0);transform-origin:left;
+  transition:transform 1s cubic-bezier(.16,1,.3,1) .9s;
+}
+.h-rule.up{transform:scaleX(1)}
+.h-ital{
+  font-family:'Gloock',serif;font-style:italic;
+  font-size:clamp(1.1rem,2vw,1.7rem);
+  color:var(--g);letter-spacing:.04em;
+}
+.h-sub{
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:200;
+  font-size:clamp(.75rem,.95vw,.9rem);
+  color:rgba(237,228,208,.45);
+  max-width:400px;line-height:1.9;
+  margin-top:clamp(10px,1.8vh,18px);
+  letter-spacing:.02em;
 }
 
-/* CURSOR */
-#cur-dot{position:fixed;width:6px;height:6px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:transform .08s}
-#cur-ring{position:fixed;width:28px;height:28px;border:1px solid rgba(201,168,76,0.5);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:left .2s cubic-bezier(.25,.46,.45,.94),top .2s cubic-bezier(.25,.46,.45,.94)}
+/* scroll indicator — bottom right */
+#si{
+  position:absolute;right:clamp(28px,5vw,80px);bottom:48px;
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+  opacity:0;transition:opacity 1s .8s;
+}
+#si.show{opacity:1}
+.si-label{
+  font-family:'Cinzel',serif;font-size:.5rem;
+  letter-spacing:.35em;color:rgba(200,164,90,.4);
+  text-transform:uppercase;
+  writing-mode:vertical-lr;letter-spacing:.3em;
+}
+.si-line{width:1px;height:50px;background:linear-gradient(to bottom,rgba(200,164,90,.35),transparent);animation:siln 2.2s ease-in-out infinite}
+@keyframes siln{0%,100%{transform:scaleY(1);transform-origin:top}50%{transform:scaleY(.6);transform-origin:top}}
 
-/* PROGRESS */
-#pbar{position:fixed;top:0;left:0;height:1px;width:0;background:linear-gradient(90deg,transparent,var(--gold),var(--gold-bright),var(--gold));box-shadow:0 0 6px var(--gold);z-index:9999;transition:width .1s linear}
+/* ═══════════════════════════════
+   MARQUEE BAND
+═══════════════════════════════ */
+.band{
+  width:100%;overflow:hidden;
+  border-top:1px solid var(--gx);
+  border-bottom:1px solid var(--gx);
+  padding:14px 0;
+  background:rgba(200,164,90,.025);
+}
+.band-track{
+  display:flex;gap:0;white-space:nowrap;
+  animation:marquee 28s linear infinite;
+}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.band-item{
+  font-family:'Cinzel',serif;font-size:.6rem;
+  letter-spacing:.3em;text-transform:uppercase;
+  color:rgba(200,164,90,.4);padding:0 48px;
+  flex-shrink:0;
+}
+.band-dot{color:var(--g);opacity:.5}
 
-/* GRAIN */
-#grain{position:fixed;inset:0;opacity:.03;pointer-events:none;z-index:9990;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");animation:gr 1s steps(2) infinite}
-@keyframes gr{0%{transform:translate(0,0)}50%{transform:translate(-1%,1%)}}
+/* ═══════════════════════════════
+   ACT 2
+═══════════════════════════════ */
+#a2{background:var(--bg);position:relative;z-index:1}
 
-/* DUST */
-.dust-wrap{position:fixed;inset:0;pointer-events:none;z-index:9}
-.mote{position:absolute;border-radius:50%;background:var(--gold);opacity:0;animation:moteUp var(--d,12s) var(--dl,0s) infinite ease-in-out}
-@keyframes moteUp{0%{opacity:0;transform:translateY(0) translateX(0) scale(1)}15%{opacity:.2}85%{opacity:.06}100%{opacity:0;transform:translateY(-100vh) translateX(var(--tx,30px)) scale(.3)}}
+/* section base */
+.s{padding:clamp(90px,12vw,160px) clamp(28px,8vw,120px);max-width:1200px;margin:0 auto;position:relative}
+.s.center{text-align:center}
+.s.center .hd{margin:0 auto}
+.s.center .bd{margin-top:24px;margin-left:auto;margin-right:auto}
 
-/* FLASH */
-#flash{position:fixed;inset:0;background:radial-gradient(ellipse at center,#fff8e7,#f5d98b 40%,transparent);opacity:0;pointer-events:none;z-index:500;will-change:opacity}
+.eye{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.38em;color:var(--g);text-transform:uppercase;margin-bottom:20px;opacity:.7}
+.hd{font-family:'Gloock',serif;font-size:clamp(1.9rem,4vw,3.2rem);font-weight:400;color:#fff;line-height:1.15;max-width:820px}
+.hd em{font-style:italic;color:rgba(255,255,255,.7)}
+.bd{font-family:'Plus Jakarta Sans',sans-serif;font-weight:300;font-size:clamp(.88rem,1.05vw,1rem);color:rgba(237,228,208,.58);line-height:1.9;max-width:720px;margin-top:28px}
+.pull{
+  border-left:1px solid var(--gm);padding:16px 26px;
+  margin-top:36px;
+  font-family:'Gloock',serif;font-style:italic;
+  font-size:1.1rem;color:rgba(237,228,208,.72);line-height:1.68;
+}
 
-/* ═══ ACT 1 ═══ */
-#act1{height:300vh;position:relative}
-#act1-sticky{position:sticky;top:0;height:100vh;overflow:hidden}
-#c3{position:absolute;inset:0;width:100%;height:100%}
-
-/* HERO TEXT */
-#hero{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 24px;z-index:20;will-change:opacity,transform}
-.h-eye{font-family:'Cinzel',serif;font-size:clamp(.58rem,.8vw,.75rem);letter-spacing:.4em;color:var(--gold);text-transform:uppercase;opacity:.8;margin-bottom:clamp(16px,3vh,28px)}
-.h-title{font-family:'Cormorant Garamond',serif;font-size:clamp(4rem,10vw,9.5rem);font-weight:300;color:#fff;line-height:.95;letter-spacing:.05em;text-shadow:0 0 120px rgba(201,168,76,.25)}
-.h-ital{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1rem,1.8vw,1.4rem);font-weight:300;color:var(--gold);margin-top:clamp(14px,2.5vh,22px);letter-spacing:.08em}
-.h-sub{font-family:'Jost',sans-serif;font-weight:200;font-size:clamp(.75rem,1vw,.9rem);color:rgba(240,232,212,.45);max-width:480px;line-height:1.8;margin-top:clamp(12px,2vh,20px);letter-spacing:.03em}
-
-#scue{position:absolute;bottom:44px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;animation:sfloat 2.8s ease-in-out infinite}
-@keyframes sfloat{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-8px)}}
-.scue-txt{font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.35em;color:rgba(201,168,76,.45);text-transform:uppercase}
-.scue-line{width:1px;height:44px;background:linear-gradient(to bottom,rgba(201,168,76,.4),transparent)}
-
-/* ═══ ACT 2 ═══ */
-#act2{background:#050301;position:relative;z-index:1}
-
-/* DIVIDER */
-.divider{width:100%;max-width:320px;height:1px;background:linear-gradient(90deg,transparent,var(--gold-mid),transparent);margin:0 auto}
-
-/* SECTION */
-.sec{padding:clamp(80px,11vw,140px) clamp(24px,7vw,100px);max-width:1160px;margin:0 auto;position:relative}
-.eye{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.38em;color:var(--gold);text-transform:uppercase;margin-bottom:22px;opacity:.75}
-.hd{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3.8vw,3rem);font-weight:300;color:#fff;line-height:1.18;max-width:860px}
-.bd{font-family:'Jost',sans-serif;font-weight:300;font-size:clamp(.88rem,1.05vw,.98rem);color:rgba(240,232,212,.6);line-height:1.85;max-width:760px;margin-top:28px}
-
-/* REVEAL */
-.R{opacity:0;filter:blur(12px);transform:translateY(44px);transition:opacity 1.4s cubic-bezier(.16,1,.3,1),filter 1.4s cubic-bezier(.16,1,.3,1),transform 1.4s cubic-bezier(.16,1,.3,1)}
+/* reveal */
+.R{opacity:0;filter:blur(10px);transform:translateY(40px);transition:opacity 1.3s cubic-bezier(.16,1,.3,1),filter 1.3s cubic-bezier(.16,1,.3,1),transform 1.3s cubic-bezier(.16,1,.3,1)}
 .R.in{opacity:1;filter:blur(0);transform:none}
 
-/* ── S1 centered ── */
-#s1{text-align:center}
-#s1 .hd{margin:0 auto}
-#s1 .bd{margin:28px auto 0;text-align:left}
-#s1::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:500px;height:260px;background:radial-gradient(ellipse at 50% 0%,rgba(201,168,76,.1),transparent 70%);pointer-events:none}
+/* divider */
+.div{max-width:200px;height:1px;background:linear-gradient(90deg,transparent,var(--gm),transparent);margin:0 auto}
+
+/* ── S1 radial glow ── */
+#s1::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:600px;height:300px;background:radial-gradient(ellipse at 50% 0%,rgba(200,164,90,.09),transparent 70%);pointer-events:none}
 
 /* ── S2 split ── */
-#s2 .split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,100px);margin-top:52px;align-items:start}
-@media(max-width:768px){#s2 .split{grid-template-columns:1fr}}
-.pull{border-left:1px solid var(--gold-mid);padding:16px 24px;margin-top:32px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.08rem;color:rgba(240,232,212,.75);line-height:1.65}
-
-/* Sacred Eye visual */
-#sacred-eye-wrap{display:flex;flex-direction:column;align-items:center;gap:20px}
-#sacred-canvas{width:100%;max-width:340px;aspect-ratio:1;display:block}
-.sacred-label{font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.32em;color:rgba(201,168,76,.4);text-transform:uppercase}
+#s2 .sp{display:grid;grid-template-columns:1fr 1fr;gap:clamp(48px,7vw,110px);margin-top:56px;align-items:start}
+@media(max-width:760px){#s2 .sp{grid-template-columns:1fr}}
+#sac{display:block;width:100%;max-width:320px;aspect-ratio:1;margin:0 auto}
+.sac-label{font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.32em;color:rgba(200,164,90,.38);text-transform:uppercase;text-align:center;margin-top:16px}
 
 /* ── S3 cards ── */
-#s3 .cg{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:52px;border:1px solid var(--gold-dim)}
-@media(max-width:768px){#s3 .cg{grid-template-columns:1fr}}
-.dc{background:#050301;padding:38px 30px 34px;position:relative;overflow:hidden;cursor:default;transition:background .3s;transform-style:preserve-3d}
-.dc::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);transform:scaleX(0);transform-origin:left;transition:transform .5s cubic-bezier(.16,1,.3,1)}
-.dc::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(201,168,76,.06),transparent 55%);opacity:0;transition:opacity .3s;pointer-events:none}
-.dc:hover{background:rgba(201,168,76,.025)}
+#s3 .cg{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:56px;border:1px solid var(--gx)}
+@media(max-width:760px){#s3 .cg{grid-template-columns:1fr}}
+.dc{
+  background:var(--bg);padding:40px 30px 36px;
+  position:relative;overflow:hidden;cursor:default;
+  transition:background .3s;transform-style:preserve-3d;
+}
+.dc::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--g),transparent);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .5s cubic-bezier(.16,1,.3,1);
+}
+.dc::after{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(200,164,90,.055),transparent 55%);
+  opacity:0;transition:opacity .3s;pointer-events:none;
+}
+.dc:hover{background:rgba(200,164,90,.022)}
 .dc:hover::before{transform:scaleX(1)}
 .dc:hover::after{opacity:1}
-.cl{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.25em;color:var(--gold);opacity:.65;margin-bottom:14px;display:block;font-style:italic}
-.ct{font-family:'Cormorant Garamond',serif;font-size:1.22rem;font-weight:400;color:#fff;margin-bottom:13px;line-height:1.28}
-.cb{font-family:'Jost',sans-serif;font-weight:300;font-size:.86rem;color:rgba(240,232,212,.58);line-height:1.78}
-.dc:not(:nth-child(3n)){border-right:1px solid var(--gold-dim)}
-.dc:nth-child(-n+3){border-bottom:1px solid var(--gold-dim)}
-@media(max-width:768px){
+.dc:not(:nth-child(3n)){border-right:1px solid var(--gx)}
+.dc:nth-child(-n+3){border-bottom:1px solid var(--gx)}
+@media(max-width:760px){
   .dc:not(:nth-child(3n)){border-right:none}
-  .dc:not(:last-child){border-bottom:1px solid var(--gold-dim)}
+  .dc:not(:last-child){border-bottom:1px solid var(--gx)}
+  .dc:nth-child(-n+3){border-bottom:1px solid var(--gx)}
 }
+.cl{font-family:'Cinzel',serif;font-size:.57rem;letter-spacing:.24em;color:var(--g);opacity:.62;margin-bottom:14px;display:block;font-style:italic}
+.ct{font-family:'Gloock',serif;font-size:1.2rem;font-weight:400;color:#fff;margin-bottom:13px;line-height:1.28}
+.cb{font-family:'Plus Jakarta Sans',sans-serif;font-weight:300;font-size:.85rem;color:rgba(237,228,208,.55);line-height:1.82}
 
 /* ── S4 rows ── */
-#s4 .rows{max-width:720px;margin:52px auto 0;border:1px solid var(--gold-dim)}
-.frow{display:grid;grid-template-columns:72px 1fr;border-bottom:1px solid var(--gold-dim)}
-.frow:last-child{border-bottom:none}
-.fnum{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:2rem;font-weight:300;color:rgba(201,168,76,.18);display:flex;align-items:center;justify-content:center;border-right:1px solid var(--gold-dim);padding:20px 0}
-.ftxt{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:300;color:rgba(240,232,212,.75);line-height:1.62;padding:22px 28px}
+#s4 .rows{max-width:700px;margin:52px auto 0;border:1px solid var(--gx)}
+.fr{display:grid;grid-template-columns:68px 1fr;border-bottom:1px solid var(--gx)}
+.fr:last-child{border-bottom:none}
+.fn{font-family:'Gloock',serif;font-style:italic;font-size:1.9rem;color:rgba(200,164,90,.16);display:flex;align-items:center;justify-content:center;border-right:1px solid var(--gx);padding:20px 0}
+.ft{font-family:'Gloock',serif;font-size:1.05rem;font-weight:400;color:rgba(237,228,208,.72);line-height:1.62;padding:22px 26px}
 
 /* ── S5 format ── */
-#s5 .fmt{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--gold-dim);margin-top:52px}
-@media(max-width:640px){#s5 .fmt{grid-template-columns:repeat(2,1fr)}}
-.fc{padding:36px 22px 32px;text-align:center;border-right:1px solid var(--gold-dim)}
+#s5 .fmt{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--gx);margin-top:56px}
+@media(max-width:600px){#s5 .fmt{grid-template-columns:repeat(2,1fr)}}
+.fc{padding:36px 20px 30px;text-align:center;border-right:1px solid var(--gx)}
 .fc:last-child{border-right:none}
-@media(max-width:640px){
+@media(max-width:600px){
   .fc:nth-child(2){border-right:none}
-  .fc:nth-child(1),.fc:nth-child(2){border-bottom:1px solid var(--gold-dim)}
+  .fc:nth-child(1),.fc:nth-child(2){border-bottom:1px solid var(--gx)}
 }
-.fl{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.28em;color:var(--gold);text-transform:uppercase;margin-bottom:14px;opacity:.75;display:block}
-.fv{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:300;color:var(--gold-bright);line-height:1.35}
-.fd{font-family:'Jost',sans-serif;font-weight:300;font-size:.76rem;color:rgba(240,232,212,.4);margin-top:8px;line-height:1.6}
+.fl{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.28em;color:var(--g);text-transform:uppercase;margin-bottom:14px;opacity:.72;display:block}
+.fv{font-family:'Gloock',serif;font-size:1.3rem;color:var(--gb);line-height:1.35}
 
 /* ── S6 testi ── */
-.tc{display:flex;border:1px solid var(--gold-dim);margin-bottom:24px;transition:border-color .4s,box-shadow .4s;cursor:default}
-.tc:hover{border-color:rgba(201,168,76,.4);box-shadow:0 0 40px rgba(201,168,76,.06)}
-.tv{width:170px;min-width:170px;background:linear-gradient(150deg,#100800,#1c1000);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-.tv::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(201,168,76,.16),transparent 65%)}
-.pb{width:44px;height:44px;border:1px solid rgba(201,168,76,.6);border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;z-index:1;transition:transform .3s,box-shadow .3s}
-.tc:hover .pb{transform:scale(1.1);box-shadow:0 0 16px rgba(201,168,76,.35)}
-.pb svg{width:14px;height:14px;fill:var(--gold);margin-left:3px}
-.tcon{padding:36px 40px;flex:1}
-.tq{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.08rem;font-weight:300;color:rgba(240,232,212,.8);line-height:1.72}
-.tn{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.25em;color:var(--gold);text-transform:uppercase;margin-top:22px}
-.tr{font-family:'Jost',sans-serif;font-weight:300;font-size:.78rem;color:rgba(240,232,212,.4);margin-top:4px}
-@media(max-width:600px){.tc{flex-direction:column}.tv{width:100%;height:160px;min-width:unset}}
+.tc{display:flex;border:1px solid var(--gx);margin-bottom:22px;transition:border-color .4s,box-shadow .4s;cursor:default}
+.tc:hover{border-color:rgba(200,164,90,.38);box-shadow:0 8px 48px rgba(200,164,90,.06)}
+.tv{width:160px;min-width:160px;background:linear-gradient(150deg,#0e0700,#1a1000);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.tv::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(200,164,90,.14),transparent 65%)}
+.pb{width:42px;height:42px;border:1px solid rgba(200,164,90,.55);border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;z-index:1;transition:transform .3s,box-shadow .3s}
+.tc:hover .pb{transform:scale(1.1);box-shadow:0 0 14px rgba(200,164,90,.32)}
+.pb svg{width:13px;height:13px;fill:var(--g);margin-left:3px}
+.tcon{padding:36px 38px;flex:1}
+.tq{font-family:'Gloock',serif;font-style:italic;font-size:1.06rem;color:rgba(237,228,208,.78);line-height:1.72}
+.tn{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.22em;color:var(--g);text-transform:uppercase;margin-top:22px}
+.tr{font-family:'Plus Jakarta Sans',sans-serif;font-weight:300;font-size:.76rem;color:rgba(237,228,208,.38);margin-top:4px}
+@media(max-width:560px){.tc{flex-direction:column}.tv{width:100%;height:150px;min-width:unset}}
 
-/* ── S7 investment ── */
-#invest{scroll-margin-top:0}
-.pbox{max-width:560px;margin:64px auto 0;position:relative;border:1px solid rgba(201,168,76,.18);background:linear-gradient(170deg,#080500,#020100);padding:clamp(36px,6vw,60px) clamp(28px,5vw,56px);text-align:center}
-.pbox::before{content:'';position:absolute;top:0;left:15%;right:15%;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);box-shadow:0 0 10px rgba(201,168,76,.4)}
-.pbox::after{content:'';position:absolute;bottom:0;left:15%;right:15%;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.3),transparent)}
-.corn{position:absolute;width:14px;height:14px}
-.ctl{top:-1px;left:-1px;border-top:1px solid var(--gold);border-left:1px solid var(--gold)}
-.ctr{top:-1px;right:-1px;border-top:1px solid var(--gold);border-right:1px solid var(--gold)}
-.cbl{bottom:-1px;left:-1px;border-bottom:1px solid var(--gold);border-left:1px solid var(--gold)}
-.cbr{bottom:-1px;right:-1px;border-bottom:1px solid var(--gold);border-right:1px solid var(--gold)}
-.pglow{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(201,168,76,.06),transparent 55%);pointer-events:none}
-.plbl{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.32em;color:var(--gold);text-transform:uppercase;margin-bottom:20px;opacity:.75}
-.pstrike{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.98rem;color:rgba(240,232,212,.3);text-decoration:line-through;margin-bottom:10px}
-.pmain{font-family:'Cormorant Garamond',serif;font-size:clamp(2.8rem,6vw,4rem);font-weight:300;color:var(--gold);text-shadow:0 0 40px rgba(201,168,76,.45);margin-bottom:8px}
-.pnote{font-family:'Jost',sans-serif;font-weight:300;font-size:.78rem;color:rgba(240,232,212,.4);margin-bottom:28px}
-.pdiv{height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.22),transparent);margin-bottom:28px}
-.blist{list-style:none;text-align:left;margin-bottom:36px}
-.blist li{display:flex;align-items:flex-start;gap:14px;font-family:'Jost',sans-serif;font-weight:300;font-size:.88rem;color:rgba(240,232,212,.7);padding:7px 0;line-height:1.55}
-.dia{flex-shrink:0;width:7px;height:7px;background:var(--gold);transform:rotate(45deg);margin-top:5px;box-shadow:0 0 5px rgba(201,168,76,.7)}
+/* ── price box ── */
+.pbox{max-width:540px;margin:64px auto 0;position:relative;border:1px solid rgba(200,164,90,.16);background:linear-gradient(170deg,#070400,#020100);padding:clamp(36px,6vw,60px) clamp(28px,5vw,52px);text-align:center}
+.pbox::before{content:'';position:absolute;top:0;left:12%;right:12%;height:1px;background:linear-gradient(90deg,transparent,var(--g),transparent);box-shadow:0 0 10px rgba(200,164,90,.35)}
+.pbox::after{content:'';position:absolute;bottom:0;left:12%;right:12%;height:1px;background:linear-gradient(90deg,transparent,rgba(200,164,90,.25),transparent)}
+.co{position:absolute;width:12px;height:12px}
+.ctl{top:-1px;left:-1px;border-top:1px solid var(--g);border-left:1px solid var(--g)}
+.ctr{top:-1px;right:-1px;border-top:1px solid var(--g);border-right:1px solid var(--g)}
+.cbl{bottom:-1px;left:-1px;border-bottom:1px solid var(--g);border-left:1px solid var(--g)}
+.cbr{bottom:-1px;right:-1px;border-bottom:1px solid var(--g);border-right:1px solid var(--g)}
+.pg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(200,164,90,.055),transparent 55%);pointer-events:none}
+.pl{font-family:'Cinzel',serif;font-size:.64rem;letter-spacing:.32em;color:var(--g);text-transform:uppercase;margin-bottom:18px;opacity:.72}
+.pst{font-family:'Gloock',serif;font-style:italic;font-size:.95rem;color:rgba(237,228,208,.28);text-decoration:line-through;margin-bottom:10px}
+.pm{font-family:'Gloock',serif;font-size:clamp(2.8rem,6vw,4rem);color:var(--g);text-shadow:0 0 40px rgba(200,164,90,.4);margin-bottom:8px}
+.pn{font-family:'Plus Jakarta Sans',sans-serif;font-weight:300;font-size:.76rem;color:rgba(237,228,208,.38);margin-bottom:26px}
+.pdv{height:1px;background:linear-gradient(90deg,transparent,rgba(200,164,90,.2),transparent);margin-bottom:26px}
+.bl{list-style:none;text-align:left;margin-bottom:34px}
+.bl li{display:flex;align-items:flex-start;gap:14px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:300;font-size:.88rem;color:rgba(237,228,208,.68);padding:7px 0;line-height:1.55}
+.di{flex-shrink:0;width:6px;height:6px;background:var(--g);transform:rotate(45deg);margin-top:6px;box-shadow:0 0 5px rgba(200,164,90,.6)}
 
-/* BUTTONS */
-.btn-g{display:inline-block;font-family:'Cinzel',serif;font-weight:600;font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:#080400;background:linear-gradient(90deg,#7a5c1e,#c9a84c,#e8c97a,#c9a84c,#7a5c1e);background-size:300% 100%;border:none;padding:17px 40px;cursor:pointer;transition:background-position .6s,box-shadow .3s,transform .25s;text-decoration:none;width:100%}
-.btn-g:hover{background-position:100% 0;box-shadow:0 0 28px rgba(201,168,76,.45),0 0 60px rgba(201,168,76,.15);transform:translateY(-2px)}
-.btn-o{display:inline-block;font-family:'Cinzel',serif;font-weight:600;font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);background:transparent;border:1px solid rgba(201,168,76,.32);padding:16px 36px;cursor:pointer;transition:border-color .3s,box-shadow .3s,transform .25s;text-decoration:none}
-.btn-o:hover{border-color:rgba(201,168,76,.65);box-shadow:0 0 18px rgba(201,168,76,.12);transform:translateY(-2px)}
-.fp{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.88rem;color:rgba(240,232,212,.28);text-align:center;margin-top:18px}
-.fp a{color:rgba(201,168,76,.38);text-decoration:underline;cursor:pointer}
+/* ── buttons ── */
+.bg{display:inline-block;font-family:'Cinzel',serif;font-weight:600;font-size:.68rem;letter-spacing:.28em;text-transform:uppercase;color:#070400;background:linear-gradient(90deg,#7a5820,#c8a45a,#e8c97a,#c8a45a,#7a5820);background-size:300% 100%;border:none;padding:17px 38px;cursor:pointer;transition:background-position .6s,box-shadow .3s,transform .25s;text-decoration:none;width:100%}
+.bg:hover{background-position:100% 0;box-shadow:0 0 30px rgba(200,164,90,.42),0 0 70px rgba(200,164,90,.12);transform:translateY(-2px)}
+.bo{display:inline-block;font-family:'Cinzel',serif;font-weight:600;font-size:.68rem;letter-spacing:.28em;text-transform:uppercase;color:var(--g);background:transparent;border:1px solid rgba(200,164,90,.3);padding:16px 34px;cursor:pointer;transition:border-color .3s,box-shadow .3s,transform .25s;text-decoration:none}
+.bo:hover{border-color:rgba(200,164,90,.6);box-shadow:0 0 18px rgba(200,164,90,.1);transform:translateY(-2px)}
+.fp{font-family:'Gloock',serif;font-style:italic;font-size:.86rem;color:rgba(237,228,208,.25);text-align:center;margin-top:18px}
+.fp a{color:rgba(200,164,90,.35);text-decoration:underline}
 
-/* ── S8 final ── */
-#s8{text-align:center}
+/* ── final cta ── */
 #s8 .hd{margin:0 auto}
-#s8 .bd{margin:22px auto 0;text-align:center}
-.ctabs{display:flex;flex-wrap:wrap;gap:18px;justify-content:center;margin-top:48px}
-.ctabs .btn-g{width:auto}
-.ctafoot{font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.28em;color:rgba(201,168,76,.3);text-transform:uppercase;margin-top:26px;text-align:center}
-.ctafoot a{color:rgba(201,168,76,.3);text-decoration:none}
-.ctafoot a:hover{color:rgba(201,168,76,.6)}
+#s8 .bd{margin-top:22px;margin-left:auto;margin-right:auto;text-align:center}
+.ctbs{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;margin-top:48px}
+.ctbs .bg{width:auto}
+.ctf{font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.28em;color:rgba(200,164,90,.28);text-transform:uppercase;margin-top:24px;text-align:center}
+.ctf a{color:rgba(200,164,90,.28);text-decoration:none}
+.ctf a:hover{color:rgba(200,164,90,.55)}
 
-/* FOOTER */
-footer{text-align:center;padding:48px 20px;font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.28em;color:rgba(201,168,76,.25);text-transform:uppercase;border-top:1px solid rgba(201,168,76,.07)}
+footer{text-align:center;padding:48px 20px;font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.28em;color:rgba(200,164,90,.22);text-transform:uppercase;border-top:1px solid rgba(200,164,90,.06)}
 
-/* MEDIA */
 @media(max-width:480px){
-  .h-title{font-size:clamp(3.2rem,14vw,5rem)}
-  .pbox{padding:30px 18px}
-  .btn-g{letter-spacing:.16em}
+  .h-title{font-size:clamp(4rem,17vw,6rem)}
+  .pbox{padding:28px 16px}
+  .bg{letter-spacing:.14em;font-size:.64rem}
 }
 @media(prefers-reduced-motion:reduce){
-  .R{transition:opacity .3s;filter:none;transform:none}
-  #cur-dot,#cur-ring,.mote{display:none}
+  .R,.hline-inner{transition:opacity .3s;filter:none;transform:none !important}
+  #cd,#cr,.mo{display:none}
+  .band-track{animation:none}
 }
 </style>
 </head>
 <body>
 
-<div id="cur-dot"></div>
-<div id="cur-ring"></div>
-<div id="pbar"></div>
-<div id="grain" aria-hidden="true"></div>
-<div class="dust-wrap" id="dust" aria-hidden="true"></div>
-<div id="flash" aria-hidden="true"></div>
+<div id="cd"></div>
+<div id="cr"></div>
+<div id="pb"></div>
+<div id="gr" aria-hidden="true"></div>
+<div class="dw" id="dw" aria-hidden="true"></div>
+<div id="fl" aria-hidden="true"></div>
 
-<!-- ══════════════════════════
-     ACT 1 — PORTAL
-══════════════════════════ -->
-<div id="act1">
-  <div id="act1-sticky">
-    <canvas id="c3"></canvas>
-    <div id="hero">
-      <p class="h-eye">Kritika Khurana</p>
-      <h1 class="h-title">Soul Records</h1>
-      <p class="h-ital">Open Your Soul Records.</p>
-      <p class="h-sub">The answers you have been searching for everywhere outside of you have been sitting inside your soul this whole time.</p>
+<!-- ══════════════════════════════
+     ACT 1 — HERO
+══════════════════════════════ -->
+<div id="a1">
+  <div id="a1s">
+    <canvas id="cv"></canvas>
+
+    <div id="hc">
+      <!-- eyebrow -->
+      <div class="hline" style="margin-bottom:clamp(18px,3.5vh,36px)">
+        <span class="hline-inner h-eye">Kritika Khurana</span>
+      </div>
+      <!-- SOUL -->
+      <div class="hline">
+        <span class="hline-inner h-title" style="transition-delay:.12s">Soul</span>
+      </div>
+      <!-- RECORDS italic -->
+      <div class="hline">
+        <span class="hline-inner h-title" style="transition-delay:.22s"><em>Records</em></span>
+      </div>
+      <!-- gold line -->
+      <div class="h-rule" id="hrule"></div>
+      <!-- tagline -->
+      <div class="hline">
+        <span class="hline-inner h-ital" style="transition-delay:.45s">Open Your Soul Records.</span>
+      </div>
+      <!-- sub -->
+      <div class="hline">
+        <span class="hline-inner h-sub" style="transition-delay:.6s">The answers you have been searching for everywhere outside of you have been sitting inside your soul this whole time.</span>
+      </div>
     </div>
-    <div id="scue" aria-hidden="true">
-      <span class="scue-txt">Step Through</span>
-      <div class="scue-line"></div>
+
+    <!-- scroll indicator -->
+    <div id="si">
+      <span class="si-label">Step Through</span>
+      <div class="si-line"></div>
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════════
+<!-- ══════════════════════════════
      ACT 2
-══════════════════════════ -->
-<div id="act2">
+══════════════════════════════ -->
+<div id="a2">
 
-<!-- S1: THE PROBLEM -->
-<div class="sec" id="s1">
+<!-- MARQUEE -->
+<div class="band">
+  <div class="band-track">
+    <span class="band-item">Akashic Records</span><span class="band-dot">&#9670;</span>
+    <span class="band-item">Past Lives</span><span class="band-dot">&#9670;</span>
+    <span class="band-item">Soul Contracts</span><span class="band-dot">&#9670;</span>
+    <span class="band-item">Karmic Healing</span><span class="band-dot">&#9670;</span>
+    <span class="band-item">Your Council</span><span class="band-dot">&#9670;</span>
+    <span class="band-item">Soul Script Method</span><span class="band-dot">&#9670;</span>
+    <span class="band-item">Akashic Records</span><span class="band-dot">&#9670;</span>
+    <span class="band-item">Past Lives</span><span class="band-dot">&#9670;</span>
+    <span class="band-item">Soul Contracts</span><span class="band-dot">&#9670;</span>
+    <span class="band-item">Karmic Healing</span><span class="band-dot">&#9670;</span>
+    <span class="band-item">Your Council</span><span class="band-dot">&#9670;</span>
+    <span class="band-item">Soul Script Method</span><span class="band-dot">&#9670;</span>
+  </div>
+</div>
+
+<!-- S1 -->
+<div class="s center" id="s1">
   <p class="eye R">Why You Are Here</p>
   <h2 class="hd R">You have done the work. Read the books. Done the healing. And something still feels unresolved.</h2>
   <p class="bd R">That loop you keep finding yourself in, the relationship that echoes a past one, the block that shows up no matter how much you work on your mindset, the grief or fear that has no obvious origin. It is not because you have not healed enough. It is because the root of it is not in this lifetime. Your soul has lived before. It has made agreements, carried wounds, and built patterns across multiple lifetimes, and those are still running quietly underneath everything you do today. That is what the Akashic Records hold. And that is why reading them changes things that nothing else has been able to.</p>
 </div>
 
-<div class="divider R"></div>
+<div class="div R"></div>
 
-<!-- S2: WHAT ARE THE RECORDS -->
-<div class="sec" id="s2">
+<!-- S2 -->
+<div class="s" id="s2">
   <p class="eye R">The Akashic Records</p>
   <h2 class="hd R">Every single thing your soul has ever lived through is stored somewhere. I will show you how to read it.</h2>
-  <div class="split">
+  <div class="sp">
     <div>
       <p class="bd R" style="margin-top:0">The Akashic Records are a living field, a cosmic archive of your soul's entire journey. Every past life. Every karmic pattern. Every contract your soul agreed to before this one began. Most people go their whole lives without knowing this is accessible to them. Some hear about it and think it is for special people with psychic gifts. It is not. Your records belong to you. The ability to open them is something any soul can develop. My job is to hold the space while you learn to do it yourself.</p>
       <blockquote class="pull R">That pattern keeping you stuck, that fear with no name, that relationship you keep recreating. It is not random. It has a story. And that story lives in your records.</blockquote>
     </div>
-    <div id="sacred-eye-wrap" class="R">
-      <canvas id="sacred-canvas" width="340" height="340" aria-label="Sacred geometry mandala"></canvas>
-      <span class="sacred-label">The Akashic Field</span>
+    <div class="R">
+      <canvas id="sac" width="320" height="320" aria-label="Sacred geometry illustration"></canvas>
+      <p class="sac-label">The Akashic Field</p>
     </div>
   </div>
 </div>
 
-<div class="divider R"></div>
+<div class="div R"></div>
 
-<!-- S3: FOUR DAYS -->
-<div class="sec" id="s3">
+<!-- S3 -->
+<div class="s" id="s3">
   <p class="eye R">The Four Days</p>
   <h2 class="hd R">Four days. Live. Just us. Inside your records.</h2>
-  <p class="R" style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.08rem;color:rgba(240,232,212,.5);margin-top:16px;max-width:640px;line-height:1.65">This is not a course you consume passively. Every session is a real-time experience. I am in your records with you, watching, guiding, and helping you trust what you are receiving.</p>
+  <p class="R" style="font-family:'Gloock',serif;font-style:italic;font-size:1.08rem;color:rgba(237,228,208,.48);margin-top:16px;max-width:600px;line-height:1.65">This is not a course you consume passively. Every session is a real-time experience. I am in your records with you, watching, guiding, and helping you trust what you are receiving.</p>
   <div class="cg R">
     <div class="dc"><span class="cl">Day One</span><h3 class="ct">What the Records Actually Are</h3><p class="cb">Not theory. We go straight into the foundations of the Akashic field, what it is, how it holds your soul's history, and why you have every right to access it. By the end of this session you will not just understand the records. You will feel them.</p></div>
     <div class="dc"><span class="cl">Day Two</span><h3 class="ct">Opening and Closing Safely</h3><p class="cb">The opening prayer. The exact protocol. The state of mind you need to enter in. You practice opening your records with me in the space with you so you feel held, clear, and safe the entire time. And you learn to close properly so you do not walk around leaking energy all day.</p></div>
@@ -277,25 +403,25 @@ footer{text-align:center;padding:48px 20px;font-family:'Cinzel',serif;font-size:
   </div>
 </div>
 
-<div class="divider R"></div>
+<div class="div R"></div>
 
-<!-- S4: IS THIS FOR YOU -->
-<div class="sec" id="s4">
+<!-- S4 -->
+<div class="s" id="s4">
   <p class="eye R">Who This Is For</p>
   <h2 class="hd R">If any of this sounds like something you have thought in the last six months, you are in the right place.</h2>
   <div class="rows R">
-    <div class="frow"><div class="fnum">I</div><div class="ftxt">You have tried therapy, coaching, journalling, and you still feel like you are circling something you cannot quite get to.</div></div>
-    <div class="frow"><div class="fnum">II</div><div class="ftxt">There is a pattern in your life, a relationship dynamic, a recurring block, a feeling, that you cannot trace to anything in this lifetime.</div></div>
-    <div class="frow"><div class="fnum">III</div><div class="ftxt">You feel drawn to past lives, soul contracts, and the idea that your story is older and bigger than this one lifetime.</div></div>
-    <div class="frow"><div class="fnum">IV</div><div class="ftxt">You want to stop relying on other people to read for you. You want your own direct channel to your own guidance.</div></div>
-    <div class="frow"><div class="fnum">V</div><div class="ftxt">Something in you already knows this is real. You are just ready to stop being on the outside of it.</div></div>
+    <div class="fr"><div class="fn">I</div><div class="ft">You have tried therapy, coaching, journalling, and you still feel like you are circling something you cannot quite get to.</div></div>
+    <div class="fr"><div class="fn">II</div><div class="ft">There is a pattern in your life, a relationship dynamic, a recurring block, a feeling, that you cannot trace to anything in this lifetime.</div></div>
+    <div class="fr"><div class="fn">III</div><div class="ft">You feel drawn to past lives, soul contracts, and the idea that your story is older and bigger than this one lifetime.</div></div>
+    <div class="fr"><div class="fn">IV</div><div class="ft">You want to stop relying on other people to read for you. You want your own direct channel to your own guidance.</div></div>
+    <div class="fr"><div class="fn">V</div><div class="ft">Something in you already knows this is real. You are just ready to stop being on the outside of it.</div></div>
   </div>
 </div>
 
-<div class="divider R"></div>
+<div class="div R"></div>
 
-<!-- S5: HOW IT WORKS -->
-<div class="sec" id="s5">
+<!-- S5 -->
+<div class="s" id="s5">
   <p class="eye R">The Container</p>
   <h2 class="hd R">Just you, me, and eight hours inside your records.</h2>
   <div class="fmt R">
@@ -306,23 +432,23 @@ footer{text-align:center;padding:48px 20px;font-family:'Cinzel',serif;font-size:
   </div>
 </div>
 
-<div class="divider R"></div>
+<div class="div R"></div>
 
-<!-- S6: TESTIMONIALS -->
-<div class="sec" id="s6">
+<!-- S6 -->
+<div class="s" id="s6">
   <p class="eye R">From Students Who Walked In</p>
   <h2 class="hd R">They had the same doubts you do.</h2>
   <p class="bd R">These are not polished reviews. They are honest accounts of what happened when someone finally sat with their own soul's story.</p>
   <div style="margin-top:48px">
     <div class="tc R">
-      <div class="tv" style="min-height:200px"><div class="pb"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+      <div class="tv" style="min-height:190px"><div class="pb"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
       <div class="tcon">
         <p class="tq">"I had been in therapy for years working on one particular pattern. On day three we found the soul contract underneath it, an agreement made lifetimes ago that I had never even known was there. That one session reached somewhere therapy never could."</p>
         <p class="tn">[Name]</p><p class="tr">Soul Records Student</p>
       </div>
     </div>
     <div class="tc R">
-      <div class="tv" style="min-height:200px"><div class="pb"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+      <div class="tv" style="min-height:190px"><div class="pb"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
       <div class="tcon">
         <p class="tq">"I cried for an hour after meeting my Council. Not because it was overwhelming. Because somewhere in me, I had always known they were there. I just had never had a language for it before."</p>
         <p class="tn">[Name]</p><p class="tr">Soul Records Student</p>
@@ -331,435 +457,422 @@ footer{text-align:center;padding:48px 20px;font-family:'Cinzel',serif;font-size:
   </div>
 </div>
 
-<div class="divider R"></div>
+<div class="div R"></div>
 
-<!-- S7: INVESTMENT -->
-<div class="sec" id="s7">
+<!-- S7 -->
+<div class="s" id="s7">
   <div id="invest"></div>
   <p class="eye R">The Energy Exchange</p>
   <h2 class="hd R">You are not paying for four days. You are paying for the ability to access your own records for the rest of your life.</h2>
   <p class="bd R">Most people who invest in this come back to their records again and again, when they are facing a big decision, when an old pattern resurfaces, when they need to hear something their thinking mind cannot give them. This is not a course you do and move on from. It is a skill that stays with you permanently.</p>
   <div class="pbox R">
-    <div class="corn ctl"></div><div class="corn ctr"></div><div class="corn cbl"></div><div class="corn cbr"></div>
-    <div class="pglow"></div>
-    <p class="plbl">Sacred Investment</p>
-    <p class="pstrike">Value of Rs. 1,00,000+</p>
-    <p class="pmain">Rs. 35,000</p>
-    <p class="pnote">One-time · All-inclusive · No surprises</p>
-    <div class="pdiv"></div>
-    <ul class="blist">
-      <li><span class="dia"></span>4 live 1:1 sessions with Kritika, 2 hours each</li>
-      <li><span class="dia"></span>Complete Soul Records opening and closing protocol</li>
-      <li><span class="dia"></span>Past life karma and soul contract navigation</li>
-      <li><span class="dia"></span>Meeting and working with your Council of Masters</li>
-      <li><span class="dia"></span>The Soul Script Method, healing from the root</li>
-      <li><span class="dia"></span>Live reading practice with personalised real-time feedback</li>
-      <li><span class="dia"></span>WhatsApp support between sessions</li>
-      <li><span class="dia"></span>The skill stays with you, read your records independently for life</li>
+    <div class="co ctl"></div><div class="co ctr"></div><div class="co cbl"></div><div class="co cbr"></div>
+    <div class="pg"></div>
+    <p class="pl">Sacred Investment</p>
+    <p class="pst">Value of Rs. 1,00,000+</p>
+    <p class="pm">Rs. 35,000</p>
+    <p class="pn">One-time · All-inclusive · No surprises</p>
+    <div class="pdv"></div>
+    <ul class="bl">
+      <li><span class="di"></span>4 live 1:1 sessions with Kritika, 2 hours each</li>
+      <li><span class="di"></span>Complete Soul Records opening and closing protocol</li>
+      <li><span class="di"></span>Past life karma and soul contract navigation</li>
+      <li><span class="di"></span>Meeting and working with your Council of Masters</li>
+      <li><span class="di"></span>The Soul Script Method, healing from the root</li>
+      <li><span class="di"></span>Live reading practice with personalised real-time feedback</li>
+      <li><span class="di"></span>WhatsApp support between sessions</li>
+      <li><span class="di"></span>The skill stays with you, read your records independently for life</li>
     </ul>
-    <a href="#invest" class="btn-g">Learn to Access My Records</a>
+    <a href="#invest" class="bg">Learn to Access My Records</a>
     <p class="fp"><a href="https://www.instagram.com/kritikakapoor0309" target="_blank" rel="noopener">Have a question?</a></p>
   </div>
 </div>
 
-<!-- S8: FINAL CTA -->
-<div class="sec" id="s8">
+<!-- S8 -->
+<div class="s center" id="s8">
   <p class="eye R">The Records Are Open</p>
   <h2 class="hd R">Your soul has been waiting for you to come home to yourself.</h2>
   <p class="bd R">The records were never locked. You were just never shown the door. Now you know it is there. And somewhere in you, the part that kept reading all the way to here, already knows it is time.</p>
-  <div class="ctabs R">
-    <a href="#invest" class="btn-g">Learn to Access My Records</a>
-    <a href="#invest" class="btn-o">Start Reading My Own Records</a>
+  <div class="ctbs R">
+    <a href="#invest" class="bg">Learn to Access My Records</a>
+    <a href="#invest" class="bo">Start Reading My Own Records</a>
   </div>
-  <p class="ctafoot R"><a href="https://www.instagram.com/kritikakapoor0309" target="_blank" rel="noopener">Have a question?</a></p>
+  <p class="ctf R"><a href="https://www.instagram.com/kritikakapoor0309" target="_blank" rel="noopener">Have a question?</a></p>
 </div>
 
-</div><!-- /act2 -->
+</div><!-- /a2 -->
 
 <footer>Soul Records · Kritika Khurana · All Sessions Online via Zoom</footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
-// ══ CURSOR ══
+// ── cursor ──
 (()=>{
-  const dot=document.getElementById('cur-dot'),ring=document.getElementById('cur-ring');
+  const d=document.getElementById('cd'),r=document.getElementById('cr');
   document.addEventListener('mousemove',e=>{
-    dot.style.left=e.clientX+'px';dot.style.top=e.clientY+'px';
-    ring.style.left=e.clientX+'px';ring.style.top=e.clientY+'px';
+    d.style.left=e.clientX+'px';d.style.top=e.clientY+'px';
+    r.style.left=e.clientX+'px';r.style.top=e.clientY+'px';
   });
 })();
 
-// ══ PROGRESS ══
+// ── progress ──
 (()=>{
-  const b=document.getElementById('pbar');
-  window.addEventListener('scroll',()=>{b.style.width=Math.min(window.scrollY/(document.body.scrollHeight-innerHeight)*100,100)+'%';},{passive:true});
+  const b=document.getElementById('pb');
+  window.addEventListener('scroll',()=>{b.style.width=Math.min(scrollY/(document.body.scrollHeight-innerHeight)*100,100)+'%';},{passive:true});
 })();
 
-// ══ DUST MOTES ══
+// ── dust motes ──
 (()=>{
-  const w=document.getElementById('dust');
-  for(let i=0;i<35;i++){
-    const m=document.createElement('div');
-    m.className='mote';
-    const sz=1+Math.random()*2;
-    m.style.cssText=`left:${Math.random()*100}%;width:${sz}px;height:${sz}px;--d:${7+Math.random()*11}s;--dl:${Math.random()*10}s;--tx:${(Math.random()-.5)*70}px`;
+  const w=document.getElementById('dw');
+  for(let i=0;i<30;i++){
+    const m=document.createElement('div');m.className='mo';
+    const sz=1+Math.random()*2.2;
+    m.style.cssText=`left:${Math.random()*100}%;width:${sz}px;height:${sz}px;--d:${8+Math.random()*12}s;--dl:${Math.random()*10}s;--tx:${(Math.random()-.5)*80}px`;
     w.appendChild(m);
   }
 })();
 
-// ══ REVEAL ══
+// ── hero staggered entrance ──
+window.addEventListener('load',()=>{
+  setTimeout(()=>{
+    document.querySelectorAll('.hline-inner').forEach(el=>el.classList.add('up'));
+    document.getElementById('hrule').classList.add('up');
+    document.getElementById('si').classList.add('show');
+  },200);
+});
+
+// ── reveal ──
 (()=>{
   const obs=new IntersectionObserver(entries=>{
     entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target);}});
-  },{threshold:.1,rootMargin:'0px 0px -30px 0px'});
+  },{threshold:.09,rootMargin:'0px 0px -30px 0px'});
   document.querySelectorAll('.R').forEach(el=>obs.observe(el));
 })();
 
-// ══ CARD TILT ══
+// ── card tilt ──
 (()=>{
   document.querySelectorAll('.dc').forEach(c=>{
     c.addEventListener('mousemove',e=>{
       const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;
-      c.style.transform=`perspective(900px) rotateX(${(y-.5)*-8}deg) rotateY(${(x-.5)*8}deg)`;
-      c.style.setProperty('--mx',`${x*100}%`);c.style.setProperty('--my',`${y*100}%`);
+      c.style.transform=`perspective(900px) rotateX(${(y-.5)*-7}deg) rotateY(${(x-.5)*7}deg)`;
+      c.style.setProperty('--mx',x*100+'%');c.style.setProperty('--my',y*100+'%');
     });
-    c.addEventListener('mouseleave',()=>c.style.transform='perspective(900px) rotateX(0) rotateY(0)');
+    c.addEventListener('mouseleave',()=>c.style.transform='none');
   });
 })();
 
-// ══ SACRED GEOMETRY CANVAS (2D) ══
+// ── sacred geometry canvas ──
 (()=>{
-  const canvas=document.getElementById('sacred-canvas');
-  if(!canvas)return;
-  const ctx=canvas.getContext('2d');
-  const W=canvas.width,H=canvas.height,cx=W/2,cy=H/2;
+  const cv=document.getElementById('sac');
+  if(!cv)return;
+  const ctx=cv.getContext('2d');
+  const W=cv.width,H=cv.height,cx=W/2,cy=H/2;
   let t=0;
 
-  function drawSacred(){
+  // precompute 6 petal centers
+  const petals=Array.from({length:6},(_,i)=>{
+    const a=(i/6)*Math.PI*2;
+    const r=W*.22;
+    return{x:cx+Math.cos(a)*r,y:cy+Math.sin(a)*r};
+  });
+
+  function frame(){
     ctx.clearRect(0,0,W,H);
+    ctx.save();
 
-    // Outer radial glow
-    const grd=ctx.createRadialGradient(cx,cy,0,cx,cy,W*.45);
-    grd.addColorStop(0,'rgba(201,168,76,0.08)');
-    grd.addColorStop(.5,'rgba(201,168,76,0.03)');
-    grd.addColorStop(1,'rgba(0,0,0,0)');
-    ctx.fillStyle=grd;ctx.fillRect(0,0,W,H);
+    // background glow
+    const bg=ctx.createRadialGradient(cx,cy,0,cx,cy,W*.45);
+    bg.addColorStop(0,'rgba(200,164,90,.07)');
+    bg.addColorStop(.6,'rgba(200,164,90,.015)');
+    bg.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
 
-    ctx.save();ctx.translate(cx,cy);
+    // outer circles
+    [.46,.42,.38].forEach((r,i)=>{
+      ctx.beginPath();ctx.arc(cx,cy,W*r,0,Math.PI*2);
+      ctx.strokeStyle=`rgba(200,164,90,${.06+i*.015+.02*Math.sin(t*.7+i)})`;
+      ctx.lineWidth=.7;ctx.stroke();
+    });
 
-    // Rotating outer ring of petals (Flower of Life inspired)
-    for(let p=0;p<6;p++){
-      ctx.save();
-      ctx.rotate((p/6)*Math.PI*2+t*.15);
-      const r=W*.28;
+    // rotating 6-petal flower
+    ctx.save();ctx.translate(cx,cy);ctx.rotate(t*.06);
+    petals.forEach(p=>{
       ctx.beginPath();
-      ctx.arc(r*.5,0,r*.5,0,Math.PI*2);
-      ctx.strokeStyle=`rgba(201,168,76,${.06+.04*Math.sin(t+p)})`;
-      ctx.lineWidth=1;ctx.stroke();
-      ctx.restore();
-    }
-
-    // Inner flower of life
-    for(let p=0;p<6;p++){
-      ctx.save();
-      ctx.rotate((p/6)*Math.PI*2-t*.08);
-      const r=W*.18;
-      ctx.beginPath();
-      ctx.arc(r*.5,0,r*.5,0,Math.PI*2);
-      ctx.strokeStyle=`rgba(232,201,122,${.12+.05*Math.sin(t*1.3+p)})`;
+      ctx.arc(p.x-cx,p.y-cy,W*.22,0,Math.PI*2);
+      ctx.strokeStyle=`rgba(232,201,122,${.1+.03*Math.sin(t*.5)})`;
       ctx.lineWidth=.8;ctx.stroke();
-      ctx.restore();
-    }
-
-    // Central circle
-    ctx.beginPath();
-    ctx.arc(0,0,W*.09,0,Math.PI*2);
-    ctx.strokeStyle=`rgba(201,168,76,${.3+.1*Math.sin(t*1.1)})`;
-    ctx.lineWidth=1;ctx.stroke();
-
-    // Innermost glow
-    const ic=ctx.createRadialGradient(0,0,0,0,0,W*.09);
-    ic.addColorStop(0,`rgba(232,201,122,${.18+.08*Math.sin(t*.9)})`);
-    ic.addColorStop(1,'rgba(201,168,76,0)');
-    ctx.fillStyle=ic;ctx.beginPath();ctx.arc(0,0,W*.09,0,Math.PI*2);ctx.fill();
-
-    // Rotating star lines
-    ctx.save();ctx.rotate(t*.05);
-    for(let s=0;s<12;s++){
-      ctx.save();ctx.rotate((s/12)*Math.PI*2);
-      ctx.beginPath();ctx.moveTo(0,W*.1);ctx.lineTo(0,W*.42);
-      ctx.strokeStyle=`rgba(201,168,76,${.04+.02*Math.sin(t+s*.5)})`;
-      ctx.lineWidth=.5;ctx.stroke();ctx.restore();
-    }
+    });
     ctx.restore();
 
-    // Outer circle
-    ctx.beginPath();
-    ctx.arc(0,0,W*.44,0,Math.PI*2);
-    ctx.strokeStyle=`rgba(201,168,76,${.12+.04*Math.sin(t*.7)})`;
-    ctx.lineWidth=.8;ctx.stroke();
+    // center circles
+    ctx.save();ctx.translate(cx,cy);ctx.rotate(-t*.04);
+    [.22,.14].forEach((r,i)=>{
+      ctx.beginPath();ctx.arc(0,0,W*r,0,Math.PI*2);
+      ctx.strokeStyle=`rgba(200,164,90,${.18+i*.06+.04*Math.sin(t*1.1)})`;
+      ctx.lineWidth=.8;ctx.stroke();
+    });
+    ctx.restore();
 
-    // Second outer circle
+    // Sri Yantra-style star of david
+    ctx.save();ctx.translate(cx,cy);ctx.rotate(t*.025);
+    const tr=W*.3;
+    // upward triangle
     ctx.beginPath();
-    ctx.arc(0,0,W*.4,0,Math.PI*2);
-    ctx.strokeStyle='rgba(201,168,76,0.07)';
-    ctx.lineWidth=.5;ctx.stroke();
+    ctx.moveTo(0,-tr);
+    ctx.lineTo(tr*Math.cos(Math.PI/6),tr*Math.sin(Math.PI/6));
+    ctx.lineTo(-tr*Math.cos(Math.PI/6),tr*Math.sin(Math.PI/6));
+    ctx.closePath();
+    ctx.strokeStyle=`rgba(244,228,168,${.14+.04*Math.sin(t)})`;
+    ctx.lineWidth=.9;ctx.stroke();
+    // downward
+    ctx.beginPath();
+    ctx.moveTo(0,tr);
+    ctx.lineTo(tr*Math.cos(Math.PI/6),-tr*Math.sin(Math.PI/6));
+    ctx.lineTo(-tr*Math.cos(Math.PI/6),-tr*Math.sin(Math.PI/6));
+    ctx.closePath();
+    ctx.strokeStyle=`rgba(200,164,90,${.14+.04*Math.sin(t+1)})`;
+    ctx.lineWidth=.9;ctx.stroke();
+    ctx.restore();
 
-    // Floating particles on the mandala
+    // center orb
+    const co=ctx.createRadialGradient(cx,cy,0,cx,cy,W*.09);
+    co.addColorStop(0,`rgba(244,228,168,${.55+.15*Math.sin(t*.8)})`);
+    co.addColorStop(.5,`rgba(200,164,90,${.18+.08*Math.sin(t*.8)})`);
+    co.addColorStop(1,'rgba(200,164,90,0)');
+    ctx.fillStyle=co;ctx.beginPath();ctx.arc(cx,cy,W*.09,0,Math.PI*2);ctx.fill();
+
+    // orbiting dots outer
     for(let i=0;i<24;i++){
-      const angle=(i/24)*Math.PI*2+t*.2;
-      const rad=W*.44*(0.92+.08*Math.sin(t*1.4+i));
-      const px=Math.cos(angle)*rad,py=Math.sin(angle)*rad;
-      ctx.beginPath();ctx.arc(px,py,1.2,0,Math.PI*2);
-      ctx.fillStyle=`rgba(232,201,122,${.25+.2*Math.sin(t*2+i)})`;
-      ctx.fill();
+      const a=(i/24)*Math.PI*2+t*.18;
+      const r=W*.44+Math.sin(t*1.3+i)*.01*W;
+      ctx.beginPath();ctx.arc(cx+Math.cos(a)*r,cy+Math.sin(a)*r,1.1,0,Math.PI*2);
+      ctx.fillStyle=`rgba(232,201,122,${.2+.18*Math.sin(t*2+i)})`;ctx.fill();
     }
-
-    // Inner particles
+    // inner dots
     for(let i=0;i<12;i++){
-      const angle=(i/12)*Math.PI*2-t*.3;
-      const rad=W*.18*(0.9+.1*Math.sin(t*1.8+i));
-      const px=Math.cos(angle)*rad,py=Math.sin(angle)*rad;
-      ctx.beginPath();ctx.arc(px,py,.8,0,Math.PI*2);
-      ctx.fillStyle=`rgba(240,220,140,${.3+.2*Math.sin(t*1.5+i)})`;
-      ctx.fill();
+      const a=(i/12)*Math.PI*2-t*.25;
+      const r=W*.22+Math.sin(t*1.6+i)*.008*W;
+      ctx.beginPath();ctx.arc(cx+Math.cos(a)*r,cy+Math.sin(a)*r,.8,0,Math.PI*2);
+      ctx.fillStyle=`rgba(244,228,168,${.28+.18*Math.sin(t*1.5+i)})`;ctx.fill();
     }
 
     ctx.restore();
-    t+=.008;
-    requestAnimationFrame(drawSacred);
+    t+=.007;
+    requestAnimationFrame(frame);
   }
-  drawSacred();
+  frame();
 })();
 
-// ══ THREE.JS — ACT 1 PORTAL ══
+// ── THREE.JS HERO ──
 (()=>{
-  const canvas=document.getElementById('c3');
+  const canvas=document.getElementById('cv');
   const W=()=>innerWidth,H=()=>innerHeight;
 
   const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:false});
   renderer.setPixelRatio(Math.min(devicePixelRatio,2));
   renderer.setSize(W(),H());
-  renderer.setClearColor(0x030200,1);
+  renderer.setClearColor(0x030100,1);
   renderer.toneMapping=THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure=1.1;
+  renderer.toneMappingExposure=1.15;
 
   const scene=new THREE.Scene();
-  scene.fog=new THREE.FogExp2(0x060300,.025);
+  scene.fog=new THREE.FogExp2(0x060300,.022);
 
-  const cam=new THREE.PerspectiveCamera(55,W()/H(),.1,300);
-  cam.position.set(0,0,20);
+  const cam=new THREE.PerspectiveCamera(52,W()/H(),.1,300);
+  cam.position.set(0,.5,22);
 
-  // Ambient warm
-  scene.add(new THREE.AmbientLight(0x120800,1.2));
-  const pl=new THREE.PointLight(0xffc060,4,40);
-  pl.position.set(0,0,2);scene.add(pl);
-  const pl2=new THREE.PointLight(0xff8c00,2,25);
-  pl2.position.set(2,3,5);scene.add(pl2);
+  scene.add(new THREE.AmbientLight(0x100800,1.5));
+  const pl=new THREE.PointLight(0xffb84d,5,50);
+  pl.position.set(0,0,4);scene.add(pl);
+  const pl2=new THREE.PointLight(0xff7700,2,30);
+  pl2.position.set(-5,4,8);scene.add(pl2);
 
-  // ── STARFIELD ──
-  const sN=1600,sG=new THREE.BufferGeometry();
+  // ── starfield ──
+  const sN=2000,sG=new THREE.BufferGeometry();
   const sP=new Float32Array(sN*3),sC=new Float32Array(sN*3);
   for(let i=0;i<sN;i++){
-    sP[i*3]=(Math.random()-.5)*200;
-    sP[i*3+1]=(Math.random()-.5)*120;
-    sP[i*3+2]=(Math.random()-.5)*150-20;
-    const w=.7+Math.random()*.3;
-    sC[i*3]=1;sC[i*3+1]=w*.92;sC[i*3+2]=w*.55;
+    sP[i*3]=(Math.random()-.5)*280;
+    sP[i*3+1]=(Math.random()-.5)*140;
+    sP[i*3+2]=(Math.random()-.5)*180-30;
+    const w=.6+Math.random()*.4;
+    sC[i*3]=1;sC[i*3+1]=w*.9;sC[i*3+2]=w*.5;
   }
   sG.setAttribute('position',new THREE.BufferAttribute(sP,3));
   sG.setAttribute('color',new THREE.BufferAttribute(sC,3));
-  scene.add(new THREE.Points(sG,new THREE.PointsMaterial({size:.14,vertexColors:true,transparent:true,opacity:.75,sizeAttenuation:true})));
+  scene.add(new THREE.Points(sG,new THREE.PointsMaterial({size:.16,vertexColors:true,transparent:true,opacity:.7,sizeAttenuation:true})));
 
-  // ── NEBULA / HAZE planes ──
-  function makeHazeTex(){
+  // ── nebula hazes ──
+  function makeHaze(){
     const s=256,c=document.createElement('canvas');c.width=s;c.height=s;
     const ctx=c.getContext('2d');
     const g=ctx.createRadialGradient(s/2,s/2,0,s/2,s/2,s/2);
-    g.addColorStop(0,'rgba(180,90,10,0.85)');
-    g.addColorStop(.4,'rgba(90,35,5,0.35)');
+    g.addColorStop(0,'rgba(160,80,8,.9)');
+    g.addColorStop(.5,'rgba(70,28,4,.3)');
     g.addColorStop(1,'rgba(0,0,0,0)');
     ctx.fillStyle=g;ctx.fillRect(0,0,s,s);
     return new THREE.CanvasTexture(c);
   }
-  const hazeTex=makeHazeTex();
-  for(let i=0;i<8;i++){
+  const ht=makeHaze();
+  for(let i=0;i<10;i++){
     const m=new THREE.Mesh(
-      new THREE.PlaneGeometry(50+Math.random()*40,18+Math.random()*12),
-      new THREE.MeshBasicMaterial({map:hazeTex,transparent:true,opacity:.07+Math.random()*.07,depthWrite:false,side:THREE.DoubleSide,color:new THREE.Color(.4,.16,.03)})
+      new THREE.PlaneGeometry(60+Math.random()*50,20+Math.random()*15),
+      new THREE.MeshBasicMaterial({map:ht,transparent:true,opacity:.055+Math.random()*.06,depthWrite:false,side:THREE.DoubleSide,color:new THREE.Color(.35,.12,.02)})
     );
-    m.position.set((Math.random()-.5)*20,-5+Math.random()*8,(Math.random()-.5)*10);
-    m.rotation.x=-Math.PI/2+(Math.random()-.5)*.4;
-    m.userData.s=.0001+Math.random()*.0002;m.userData.dir=Math.random()>.5?1:-1;
+    m.position.set((Math.random()-.5)*30,-8+Math.random()*10,(Math.random()-.5)*15);
+    m.rotation.x=-Math.PI/2+(Math.random()-.5)*.5;
+    m.userData.s=(.8+Math.random()*.8)*.0001;m.userData.d=Math.random()>.5?1:-1;
     scene.add(m);
   }
 
-  // ── SACRED GEOMETRY in 3D (at the portal center) ──
-  const geoGroup=new THREE.Group();
-  scene.add(geoGroup);
-  geoGroup.position.set(0,0,0);
+  // ── sacred geometry 3D portal ──
+  const pg=new THREE.Group();
+  scene.add(pg);
 
-  function makeRingLine(radius,segments,color,opacity){
+  function ring(r,segs,col,op){
     const pts=[];
-    for(let i=0;i<=segments;i++){
-      const a=(i/segments)*Math.PI*2;
-      pts.push(new THREE.Vector3(Math.cos(a)*radius,Math.sin(a)*radius,0));
-    }
+    for(let i=0;i<=segs;i++){const a=(i/segs)*Math.PI*2;pts.push(new THREE.Vector3(Math.cos(a)*r,Math.sin(a)*r,0));}
     const g=new THREE.BufferGeometry().setFromPoints(pts);
-    const m=new THREE.LineBasicMaterial({color,transparent:true,opacity,blending:THREE.AdditiveBlending});
-    return new THREE.Line(g,m);
+    return new THREE.Line(g,new THREE.LineBasicMaterial({color:col,transparent:true,opacity:op,blending:THREE.AdditiveBlending}));
+  }
+  function tri(pts,col,op){
+    const p=[...pts,pts[0]].map(p=>new THREE.Vector3(p[0],p[1],0));
+    const g=new THREE.BufferGeometry().setFromPoints(p);
+    return new THREE.Line(g,new THREE.LineBasicMaterial({color:col,transparent:true,opacity:op,blending:THREE.AdditiveBlending}));
   }
 
-  // Concentric rings
-  [3.2,2.6,2.0,1.5,1.0,.55].forEach((r,i)=>{
-    const opacity=.12+i*.04;
-    const ring=makeRingLine(r,80,0xc9a84c,opacity);
-    geoGroup.add(ring);
+  // Rings
+  [3.8,3.2,2.5,1.9,1.3,.7].forEach((r,i)=>{
+    pg.add(ring(r,90,0xc8a45a,.08+i*.025));
   });
 
-  // 6-petal flower of life in 3D
-  const petalGroup=new THREE.Group();
-  geoGroup.add(petalGroup);
+  // Flower petals
+  const fg=new THREE.Group();pg.add(fg);
   for(let p=0;p<6;p++){
-    const angle=(p/6)*Math.PI*2;
-    const r=1.0;
-    const petal=makeRingLine(r,60,0xe8c97a,.13);
-    petal.position.set(Math.cos(angle)*r,Math.sin(angle)*r,0);
-    petalGroup.add(petal);
+    const a=(p/6)*Math.PI*2,R=1.3;
+    const rl=ring(R,60,0xe8c97a,.11);
+    rl.position.set(Math.cos(a)*R,Math.sin(a)*R,0);
+    fg.add(rl);
   }
 
-  // Inner Sri Yantra-like triangles
-  function makeTriangle(pts,color,opacity){
-    const points=[...pts,pts[0]];
-    const g=new THREE.BufferGeometry().setFromPoints(points.map(p=>new THREE.Vector3(p[0],p[1],0)));
-    return new THREE.Line(g,new THREE.LineBasicMaterial({color,transparent:true,opacity,blending:THREE.AdditiveBlending}));
-  }
-  const r1=1.8;
-  const tri1=makeTriangle([
-    [0,r1],[Math.cos(Math.PI*7/6)*r1,Math.sin(Math.PI*7/6)*r1],[Math.cos(Math.PI*11/6)*r1,Math.sin(Math.PI*11/6)*r1]
-  ],0xf0dfa0,.18);
-  const tri2=makeTriangle([
-    [0,-r1],[Math.cos(Math.PI/6)*r1,Math.sin(Math.PI/6)*r1],[Math.cos(Math.PI*5/6)*r1,Math.sin(Math.PI*5/6)*r1]
-  ],0xc9a84c,.18);
-  geoGroup.add(tri1,tri2);
+  // Star of David
+  const R2=2.2;
+  pg.add(tri([[0,-R2],[R2*Math.cos(Math.PI/6),R2*Math.sin(Math.PI/6)],[-R2*Math.cos(Math.PI/6),R2*Math.sin(Math.PI/6)]],0xf4e4a8,.16));
+  pg.add(tri([[0,R2],[R2*Math.cos(Math.PI/6),-R2*Math.sin(Math.PI/6)],[-R2*Math.cos(Math.PI/6),-R2*Math.sin(Math.PI/6)]],0xc8a45a,.16));
 
-  // Outer dotted orbit particles
-  const orbitN=60;
-  const orbitG=new THREE.BufferGeometry();
-  const orbitP=new Float32Array(orbitN*3);
-  for(let i=0;i<orbitN;i++){
-    const a=(i/orbitN)*Math.PI*2;
-    orbitP[i*3]=Math.cos(a)*3.2;
-    orbitP[i*3+1]=Math.sin(a)*3.2;
-    orbitP[i*3+2]=0;
-  }
-  orbitG.setAttribute('position',new THREE.BufferAttribute(orbitP,3));
-  scene.add(new THREE.Points(orbitG,new THREE.PointsMaterial({color:0xd4af72,size:.06,transparent:true,opacity:.5,blending:THREE.AdditiveBlending})));
-
-  // ── PORTAL BLOOM ──
+  // Center bloom sprite
   function makeBloom(){
     const s=256,c=document.createElement('canvas');c.width=s;c.height=s;
     const ctx=c.getContext('2d');
     const g=ctx.createRadialGradient(s/2,s/2,0,s/2,s/2,s/2);
-    g.addColorStop(0,'rgba(255,235,140,1)');
-    g.addColorStop(.15,'rgba(220,160,50,.6)');
-    g.addColorStop(.4,'rgba(180,110,20,.2)');
+    g.addColorStop(0,'rgba(255,230,120,1)');
+    g.addColorStop(.15,'rgba(220,160,40,.65)');
+    g.addColorStop(.45,'rgba(160,90,10,.18)');
     g.addColorStop(1,'rgba(0,0,0,0)');
     ctx.fillStyle=g;ctx.fillRect(0,0,s,s);
     return new THREE.CanvasTexture(c);
   }
-  const bloomTex=makeBloom();
-  const bloom=new THREE.Sprite(new THREE.SpriteMaterial({map:bloomTex,transparent:true,opacity:.5,depthWrite:false,blending:THREE.AdditiveBlending,color:new THREE.Color(1,.82,.3)}));
-  bloom.scale.set(12,12,1);
-  geoGroup.add(bloom);
+  const bt=makeBloom();
+  const bloom=new THREE.Sprite(new THREE.SpriteMaterial({map:bt,transparent:true,opacity:.55,depthWrite:false,blending:THREE.AdditiveBlending,color:new THREE.Color(1,.82,.3)}));
+  bloom.scale.set(14,14,1);pg.add(bloom);
 
-  // Rising soul particles
-  const spN=300,spG=new THREE.BufferGeometry();
+  // outer bloom (larger, dimmer)
+  const bloom2=new THREE.Sprite(new THREE.SpriteMaterial({map:bt,transparent:true,opacity:.2,depthWrite:false,blending:THREE.AdditiveBlending,color:new THREE.Color(1,.7,.2)}));
+  bloom2.scale.set(28,28,1);pg.add(bloom2);
+
+  // Orbit dots
+  const oN=72,oG=new THREE.BufferGeometry();
+  const oP=new Float32Array(oN*3);
+  for(let i=0;i<oN;i++){const a=(i/oN)*Math.PI*2;oP[i*3]=Math.cos(a)*3.8;oP[i*3+1]=Math.sin(a)*3.8;oP[i*3+2]=0;}
+  oG.setAttribute('position',new THREE.BufferAttribute(oP,3));
+  pg.add(new THREE.Points(oG,new THREE.PointsMaterial({color:0xd4b060,size:.055,transparent:true,opacity:.45,blending:THREE.AdditiveBlending})));
+
+  // Soul particles
+  const spN=400,spG=new THREE.BufferGeometry();
   const spP=new Float32Array(spN*3),spV=[];
   for(let i=0;i<spN;i++){
-    spP[i*3]=(Math.random()-.5)*10;
-    spP[i*3+1]=(Math.random()-.5)*10;
-    spP[i*3+2]=(Math.random()-.5)*4;
-    spV.push({vx:(Math.random()-.5)*.003,vy:.003+Math.random()*.008,vz:(Math.random()-.5)*.002,life:Math.random()});
+    spP[i*3]=(Math.random()-.5)*14;
+    spP[i*3+1]=(Math.random()-.5)*14;
+    spP[i*3+2]=(Math.random()-.5)*6;
+    spV.push({vx:(Math.random()-.5)*.003,vy:.003+Math.random()*.009,vz:(Math.random()-.5)*.002,life:Math.random()});
   }
   spG.setAttribute('position',new THREE.BufferAttribute(spP,3));
-  const spMesh=new THREE.Points(spG,new THREE.PointsMaterial({color:0xd4af72,size:.055,transparent:true,opacity:.6,sizeAttenuation:true,blending:THREE.AdditiveBlending}));
-  scene.add(spMesh);
+  scene.add(new THREE.Points(spG,new THREE.PointsMaterial({color:0xc8a45a,size:.05,transparent:true,opacity:.55,sizeAttenuation:true,blending:THREE.AdditiveBlending})));
 
-  // Scroll refs
-  const act1El=document.getElementById('act1');
-  const heroEl=document.getElementById('hero');
-  const scueEl=document.getElementById('scue');
-  const flashEl=document.getElementById('flash');
+  // Mouse influence
+  let mouseX=0,mouseY=0;
+  document.addEventListener('mousemove',e=>{mouseX=(e.clientX/innerWidth-.5)*2;mouseY=-(e.clientY/innerHeight-.5)*2;});
 
+  const a1El=document.getElementById('a1');
+  const hcEl=document.getElementById('hc');
+  const siEl=document.getElementById('si');
+  const flEl=document.getElementById('fl');
   let lt=0;
-  function animate(time){
-    requestAnimationFrame(animate);
-    const dt=(time-lt)*.001;lt=time;
 
-    // Particle drift
+  function animate(now){
+    requestAnimationFrame(animate);
+    const dt=(now-lt)*.001;lt=now;
+
+    // particles
     const pa=spG.attributes.position.array;
     for(let i=0;i<spN;i++){
       const v=spV[i];
       pa[i*3]+=v.vx;pa[i*3+1]+=v.vy;pa[i*3+2]+=v.vz;
-      v.life+=dt*.08;
-      if(pa[i*3+1]>6||v.life>1){
-        pa[i*3]=(Math.random()-.5)*8;pa[i*3+1]=-5;pa[i*3+2]=(Math.random()-.5)*3;v.life=0;
-      }
+      v.life+=dt*.07;
+      if(pa[i*3+1]>8||v.life>1){pa[i*3]=(Math.random()-.5)*10;pa[i*3+1]=-7;pa[i*3+2]=(Math.random()-.5)*4;v.life=0;}
     }
     spG.attributes.position.needsUpdate=true;
 
-    // Sacred geometry rotation
-    geoGroup.rotation.z=time*.00018;
-    petalGroup.rotation.z=-time*.00035;
+    // geometry rotate
+    pg.rotation.z=now*.00015;
+    fg.rotation.z=-now*.0003;
 
-    // Bloom pulse
-    bloom.material.opacity=.42+Math.sin(time*.0009)*.12;
-    bloom.scale.set(12+Math.sin(time*.0007)*1.5,12+Math.sin(time*.0007)*1.5,1);
+    // bloom pulse
+    const bp=.48+Math.sin(now*.0008)*.12;
+    bloom.material.opacity=bp;
+    bloom.scale.setScalar(14+Math.sin(now*.0007)*1.8);
+    bloom2.material.opacity=.16+Math.sin(now*.0006)*.06;
 
-    // Point light gentle float
-    pl.position.y=Math.sin(time*.0006)*.8;
-    pl.intensity=3.5+Math.sin(time*.0009)*1;
+    // point light pulse
+    pl.intensity=4.5+Math.sin(now*.0009)*1.5;
+    pl.position.y=Math.sin(now*.0006)*1;
 
-    // Scroll
-    const scrollTop=window.scrollY;
-    const act1H=act1El.offsetHeight-innerHeight;
-    const t=Math.min(Math.max(scrollTop/act1H,0),1);
+    // subtle camera mouse parallax (only when not scrolling)
+    const scrollT=scrollY/(a1El.offsetHeight-innerHeight)||0;
+    if(scrollT<.05){
+      cam.position.x+=(mouseX*.8-cam.position.x)*.02;
+      cam.position.y+=(.5+mouseY*.5-cam.position.y)*.02;
+    }
 
-    // Camera: pull from z=20 to z=-1
-    cam.position.z=20-t*21;
-    cam.position.y=t*-.3;
-    cam.fov=55+t*8;cam.updateProjectionMatrix();
+    // scroll drive
+    const t=Math.min(Math.max(scrollY/(a1El.offsetHeight-innerHeight),0),1);
+    cam.position.z=22-t*23;
+    cam.position.y+=((.5-t*.5)-cam.position.y)*.08;
+    cam.fov=52+t*10;cam.updateProjectionMatrix();
 
-    // Geometry scale up as we approach
-    geoGroup.scale.setScalar(1+t*.5);
+    pg.scale.setScalar(1+t*.6);
 
-    // Hero fade
-    const ht=Math.min(t/.45,1);
-    heroEl.style.opacity=1-ht;
-    heroEl.style.transform=`scale(${1-ht*.04}) translateY(${ht*-20}px)`;
-    scueEl.style.opacity=Math.max(0,1-t*5);
+    const ht2=Math.min(t/.4,1);
+    hcEl.style.opacity=1-ht2;
+    hcEl.style.transform=`translateY(${ht2*-30}px)`;
+    siEl.style.opacity=Math.max(0,1-t*6)*(siEl.classList.contains('show')?1:0);
 
-    // Flash: peaks at t=0.78
+    // flash
     let fo=0;
-    if(t>.58&&t<1){const ft=(t-.58)/.42;fo=ft<.5?ft*2:(1-ft)*2;}
-    flashEl.style.opacity=fo;
+    if(t>.55&&t<1){const ft=(t-.55)/.45;fo=ft<.5?ft*2:(1-ft)*2;}
+    flEl.style.opacity=fo;
 
-    // Haze drift
+    // haze drift
     scene.children.forEach(ch=>{
       if(ch.userData&&ch.userData.s){
-        ch.position.x+=ch.userData.s*ch.userData.dir;
-        if(Math.abs(ch.position.x)>18)ch.userData.dir*=-1;
+        ch.position.x+=ch.userData.s*ch.userData.d;
+        if(Math.abs(ch.position.x)>22)ch.userData.d*=-1;
       }
     });
 
     renderer.render(scene,cam);
   }
   requestAnimationFrame(animate);
-
-  window.addEventListener('resize',()=>{
-    cam.aspect=W()/H();cam.updateProjectionMatrix();renderer.setSize(W(),H());
-  },{passive:true});
+  window.addEventListener('resize',()=>{cam.aspect=W()/H();cam.updateProjectionMatrix();renderer.setSize(W(),H());},{passive:true});
 })();
 </script>
 </body>
