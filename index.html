@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soul Records — Kritika Khurana</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --gold:#d4af72;
+  --gold-bright:#f5d98b;
+  --gold-dark:#7a5c1e;
+  --cream:#f0e8d4;
+  --black:#000;
+  --gold-dim:rgba(212,175,114,0.18);
+  --gold-mid:rgba(212,175,114,0.35);
+}
+html{scroll-behavior:smooth}
+body{
+  background:#000;
+  color:var(--cream);
+  font-family:'Jost',sans-serif;
+  font-weight:300;
+  cursor:none;
+  overflow-x:hidden;
+}
+
+/* ── CURSOR ── */
+#cursor-dot{
+  position:fixed;width:8px;height:8px;
+  background:var(--gold);border-radius:50%;
+  pointer-events:none;z-index:99999;
+  transform:translate(-50%,-50%);
+  transition:transform .1s;
+}
+#cursor-ring{
+  position:fixed;width:32px;height:32px;
+  border:1px solid rgba(212,175,114,0.6);
+  border-radius:50%;pointer-events:none;
+  z-index:99998;transform:translate(-50%,-50%);
+  transition:left .18s cubic-bezier(.25,.46,.45,.94),top .18s cubic-bezier(.25,.46,.45,.94);
+}
+
+/* ── PROGRESS BAR ── */
+#progress-bar{
+  position:fixed;top:0;left:0;height:2px;width:0%;
+  background:linear-gradient(90deg,var(--gold-dark),var(--gold),var(--gold-bright));
+  box-shadow:0 0 8px var(--gold);
+  z-index:9999;transition:width .1s linear;
+}
+
+/* ── GRAIN ── */
+#grain{
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity:.04;pointer-events:none;z-index:9997;
+  animation:grain 1.2s steps(2) infinite;
+}
+@keyframes grain{0%{transform:translate(0,0)}25%{transform:translate(-2%,1%)}50%{transform:translate(1%,-1%)}75%{transform:translate(-1%,2%)}100%{transform:translate(2%,-2%)}}
+
+/* ── CSS GOLD DUST ── */
+.dust-container{position:fixed;inset:0;pointer-events:none;z-index:9996;overflow:hidden}
+.dust{
+  position:absolute;bottom:-10px;
+  width:2px;height:2px;
+  background:var(--gold);
+  border-radius:50%;
+  opacity:0;
+  animation:dustRise var(--dur,8s) var(--delay,0s) infinite ease-in;
+}
+@keyframes dustRise{
+  0%{transform:translateY(0) translateX(0);opacity:0}
+  10%{opacity:.18}
+  90%{opacity:.08}
+  100%{transform:translateY(-100vh) translateX(var(--dx,20px));opacity:0}
+}
+
+/* ── ACT 1: STICKY SECTION ── */
+#act1{
+  position:relative;
+  height:300vh;
+}
+#act1-sticky{
+  position:sticky;top:0;
+  width:100%;height:100vh;
+  overflow:hidden;
+}
+#three-canvas{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+}
+#flash-overlay{
+  position:fixed;inset:0;
+  background:radial-gradient(ellipse at center,#fff8e8 0%,#ffd97b 40%,#fff 100%);
+  opacity:0;pointer-events:none;z-index:500;
+  will-change:opacity;
+}
+
+/* ── HERO TEXT ── */
+#hero-text{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  z-index:10;
+  text-align:center;padding:0 20px;
+  will-change:opacity,transform;
+}
+.hero-eyebrow{
+  font-family:'Cinzel',serif;
+  font-size:clamp(.6rem,.9vw,.85rem);
+  letter-spacing:.35em;
+  color:var(--gold);
+  text-transform:uppercase;
+  margin-bottom:18px;
+  opacity:.85;
+}
+.hero-headline{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(3.5rem,9vw,9rem);
+  font-weight:300;
+  color:#fff;
+  line-height:1;
+  letter-spacing:.04em;
+  text-shadow:0 0 80px rgba(212,175,114,.4);
+}
+.hero-italic{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-size:clamp(1rem,2vw,1.5rem);
+  font-weight:300;
+  color:var(--gold);
+  margin-top:16px;
+  letter-spacing:.06em;
+}
+.hero-sub{
+  font-family:'Jost',sans-serif;
+  font-weight:200;
+  font-size:clamp(.75rem,1.1vw,.95rem);
+  color:rgba(240,232,212,.55);
+  max-width:520px;
+  line-height:1.7;
+  margin-top:22px;
+  letter-spacing:.02em;
+}
+#scroll-cue{
+  position:absolute;bottom:48px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+  animation:cueFloat 2.4s ease-in-out infinite;
+}
+@keyframes cueFloat{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-8px)}}
+.cue-label{
+  font-family:'Cinzel',serif;
+  font-size:.55rem;letter-spacing:.3em;
+  color:rgba(212,175,114,.6);text-transform:uppercase;
+}
+.cue-line{
+  width:1px;height:40px;
+  background:linear-gradient(to bottom,rgba(212,175,114,.6),transparent);
+}
+
+/* ── ACT 2 CONTAINER ── */
+#act2{
+  background:#000;
+  position:relative;
+  z-index:1;
+}
+
+/* ── SECTION BASE ── */
+.section{
+  padding:clamp(80px,10vw,140px) clamp(20px,6vw,80px);
+  max-width:1200px;
+  margin:0 auto;
+  position:relative;
+}
+.section-eyebrow{
+  font-family:'Cinzel',serif;
+  font-size:.7rem;letter-spacing:.35em;
+  color:var(--gold);text-transform:uppercase;
+  margin-bottom:24px;opacity:.8;
+}
+.section-heading{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.9rem,4vw,3.2rem);
+  font-weight:300;color:#fff;
+  line-height:1.18;
+  max-width:860px;
+}
+.section-body{
+  font-family:'Jost',sans-serif;
+  font-weight:300;
+  font-size:clamp(.9rem,1.1vw,1rem);
+  color:rgba(240,232,212,.7);
+  line-height:1.8;
+  max-width:780px;
+  margin-top:28px;
+}
+
+/* ── SCROLL REVEAL ── */
+.R{
+  opacity:0;
+  filter:blur(14px);
+  transform:translateY(50px);
+  transition:opacity 1.3s cubic-bezier(.16,1,.3,1),filter 1.3s cubic-bezier(.16,1,.3,1),transform 1.3s cubic-bezier(.16,1,.3,1);
+}
+.R.in{opacity:1;filter:blur(0);transform:translateY(0)}
+
+/* ── SECTION 1 ── */
+#s1{text-align:center}
+#s1::before{
+  content:'';
+  position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:600px;height:300px;
+  background:radial-gradient(ellipse at 50% 0%,rgba(212,175,114,.12),transparent 70%);
+  pointer-events:none;
+}
+#s1 .section-body{margin:28px auto 0;text-align:left}
+
+/* ── SECTION 2 ── */
+#s2 .s2-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:clamp(30px,5vw,80px);
+  margin-top:50px;
+  align-items:start;
+}
+@media(max-width:768px){#s2 .s2-grid{grid-template-columns:1fr}}
+.pull-quote{
+  border-left:2px solid var(--gold);
+  padding:18px 24px;
+  margin-top:36px;
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-size:1.1rem;
+  color:rgba(240,232,212,.8);
+  line-height:1.6;
+}
+
+/* ── BOOKCASE ── */
+#bookcase-wrap{position:relative;text-align:center}
+#bookcase{
+  display:flex;flex-direction:column;gap:0;
+  width:100%;max-width:340px;
+  margin:0 auto;
+}
+.bookcase-label{
+  font-family:'Cinzel',serif;
+  font-size:.55rem;letter-spacing:.3em;
+  color:rgba(212,175,114,.5);
+  text-transform:uppercase;
+  margin-top:14px;
+}
+
+/* ── SECTION 3: CARDS ── */
+#s3 .cards-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1px;
+  margin-top:50px;
+  border:1px solid var(--gold-dim);
+}
+@media(max-width:768px){#s3 .cards-grid{grid-template-columns:1fr}}
+.day-card{
+  background:#000;
+  padding:36px 28px 32px;
+  border:none;
+  position:relative;
+  overflow:hidden;
+  cursor:pointer;
+  transition:background .3s;
+  transform-style:preserve-3d;
+  will-change:transform;
+}
+.day-card::before{
+  content:'';
+  position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  transform:scaleX(0);
+  transition:transform .45s cubic-bezier(.16,1,.3,1);
+  transform-origin:left;
+}
+.day-card::after{
+  content:'';
+  position:absolute;inset:0;
+  background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(212,175,114,.07) 0%,transparent 60%);
+  opacity:0;
+  transition:opacity .3s;
+  pointer-events:none;
+}
+.day-card:hover{background:rgba(212,175,114,.03)}
+.day-card:hover::before{transform:scaleX(1)}
+.day-card:hover::after{opacity:1}
+.card-label{
+  font-family:'Cinzel',serif;
+  font-style:italic;
+  font-size:.62rem;letter-spacing:.25em;
+  color:var(--gold);opacity:.7;
+  margin-bottom:14px;
+  display:block;
+}
+.card-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.25rem;font-weight:400;
+  color:#fff;margin-bottom:14px;
+  line-height:1.25;
+}
+.card-body{
+  font-family:'Jost',sans-serif;
+  font-weight:300;font-size:.87rem;
+  color:rgba(240,232,212,.62);
+  line-height:1.75;
+}
+/* card borders inside grid */
+.day-card:not(:nth-child(3n)){border-right:1px solid var(--gold-dim)}
+@media(max-width:768px){.day-card:not(:nth-child(3n)){border-right:none}}
+.day-card:nth-child(-n+3){border-bottom:1px solid var(--gold-dim)}
+@media(max-width:768px){
+  .day-card:not(:last-child){border-bottom:1px solid var(--gold-dim)}
+  .day-card:nth-child(-n+3){border-bottom:1px solid var(--gold-dim)}
+}
+
+/* ── SECTION 4 ── */
+#s4 .rows-container{
+  max-width:720px;margin:50px auto 0;
+  border:1px solid var(--gold-dim);
+}
+.for-row{
+  display:grid;grid-template-columns:72px 1fr;
+  border-bottom:1px solid var(--gold-dim);
+}
+.for-row:last-child{border-bottom:none}
+.for-num{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;font-size:2.2rem;font-weight:300;
+  color:rgba(212,175,114,.2);
+  display:flex;align-items:center;justify-content:center;
+  border-right:1px solid var(--gold-dim);
+  padding:22px 0;
+}
+.for-text{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.05rem;font-weight:300;
+  color:rgba(240,232,212,.8);
+  line-height:1.6;
+  padding:22px 28px;
+}
+
+/* ── SECTION 5 ── */
+#s5 .format-row{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  border:1px solid var(--gold-dim);
+  margin-top:50px;
+}
+@media(max-width:640px){#s5 .format-row{grid-template-columns:repeat(2,1fr)}}
+.format-cell{
+  padding:36px 24px 32px;
+  text-align:center;
+  border-right:1px solid var(--gold-dim);
+  position:relative;
+}
+.format-cell:last-child{border-right:none}
+@media(max-width:640px){
+  .format-cell:nth-child(2){border-right:none}
+  .format-cell:nth-child(1),.format-cell:nth-child(2){border-bottom:1px solid var(--gold-dim)}
+}
+.format-label{
+  font-family:'Cinzel',serif;
+  font-size:.62rem;letter-spacing:.28em;
+  color:var(--gold);text-transform:uppercase;
+  margin-bottom:14px;opacity:.8;
+  display:block;
+}
+.format-value{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.45rem;font-weight:300;
+  color:var(--gold);
+  line-height:1.3;
+}
+.format-desc{
+  font-family:'Jost',sans-serif;
+  font-weight:300;font-size:.78rem;
+  color:rgba(240,232,212,.5);
+  margin-top:10px;line-height:1.6;
+}
+
+/* ── SECTION 6: TESTIMONIALS ── */
+.testi-card{
+  display:flex;
+  border:1px solid var(--gold-dim);
+  margin-bottom:24px;
+  cursor:pointer;
+  transition:border-color .35s,box-shadow .35s;
+}
+.testi-card:hover{
+  border-color:rgba(212,175,114,.45);
+  box-shadow:0 0 30px rgba(212,175,114,.08);
+}
+.testi-video{
+  width:180px;min-width:180px;
+  background:linear-gradient(160deg,#110900,#1e1000);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;
+  overflow:hidden;
+}
+.testi-video::after{
+  content:'';
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse at center,rgba(212,175,114,.18),transparent 70%);
+}
+.play-btn{
+  width:48px;height:48px;
+  border:1.5px solid var(--gold);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;z-index:1;
+  transition:transform .3s,box-shadow .3s;
+}
+.testi-card:hover .play-btn{
+  transform:scale(1.08);
+  box-shadow:0 0 20px rgba(212,175,114,.4);
+}
+.play-btn svg{width:16px;height:16px;fill:var(--gold);margin-left:3px}
+.testi-content{padding:36px 40px;flex:1}
+.testi-quote{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;font-size:1.1rem;font-weight:300;
+  color:rgba(240,232,212,.85);
+  line-height:1.7;
+}
+.testi-name{
+  font-family:'Cinzel',serif;
+  font-size:.62rem;letter-spacing:.25em;
+  color:var(--gold);text-transform:uppercase;
+  margin-top:24px;
+}
+.testi-role{
+  font-family:'Jost',sans-serif;
+  font-weight:300;font-size:.8rem;
+  color:rgba(240,232,212,.45);
+  margin-top:4px;
+}
+@media(max-width:640px){
+  .testi-card{flex-direction:column}
+  .testi-video{width:100%;height:180px;min-width:unset}
+}
+
+/* ── SECTION 7: INVESTMENT ── */
+#invest{scroll-margin-top:0}
+.price-box{
+  max-width:560px;margin:64px auto 0;
+  position:relative;
+  border:1px solid rgba(212,175,114,.2);
+  background:linear-gradient(160deg,#080400,#030201);
+  padding:clamp(36px,6vw,60px) clamp(28px,5vw,56px);
+  text-align:center;
+}
+.price-box::before{
+  content:'';
+  position:absolute;top:0;left:10%;right:10%;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  box-shadow:0 0 12px var(--gold);
+}
+.price-box::after{
+  content:'';
+  position:absolute;bottom:0;left:10%;right:10%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(212,175,114,.4),transparent);
+}
+/* corner brackets */
+.corner{position:absolute;width:16px;height:16px}
+.corner-tl{top:-1px;left:-1px;border-top:1px solid var(--gold);border-left:1px solid var(--gold)}
+.corner-tr{top:-1px;right:-1px;border-top:1px solid var(--gold);border-right:1px solid var(--gold)}
+.corner-bl{bottom:-1px;left:-1px;border-bottom:1px solid var(--gold);border-left:1px solid var(--gold)}
+.corner-br{bottom:-1px;right:-1px;border-bottom:1px solid var(--gold);border-right:1px solid var(--gold)}
+.price-glow{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 0%,rgba(212,175,114,.07),transparent 60%);
+  pointer-events:none;
+}
+.price-label{
+  font-family:'Cinzel',serif;
+  font-size:.68rem;letter-spacing:.32em;
+  color:var(--gold);text-transform:uppercase;
+  margin-bottom:20px;opacity:.8;
+}
+.price-strikethrough{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;font-size:1rem;
+  color:rgba(240,232,212,.35);
+  text-decoration:line-through;
+  margin-bottom:12px;
+}
+.price-main{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.8rem,6vw,4rem);
+  font-weight:300;
+  color:var(--gold);
+  text-shadow:0 0 40px rgba(212,175,114,.5);
+  margin-bottom:10px;
+}
+.price-note{
+  font-family:'Jost',sans-serif;
+  font-weight:300;font-size:.8rem;
+  color:rgba(240,232,212,.45);
+  margin-bottom:28px;
+}
+.price-divider{
+  height:1px;
+  background:linear-gradient(90deg,transparent,rgba(212,175,114,.25),transparent);
+  margin-bottom:28px;
+}
+.bullet-list{
+  list-style:none;
+  text-align:left;
+  margin-bottom:36px;
+}
+.bullet-list li{
+  display:flex;align-items:flex-start;gap:14px;
+  font-family:'Jost',sans-serif;font-weight:300;font-size:.9rem;
+  color:rgba(240,232,212,.75);
+  padding:8px 0;
+  line-height:1.55;
+}
+.diamond{
+  flex-shrink:0;width:8px;height:8px;
+  background:var(--gold);
+  transform:rotate(45deg);
+  margin-top:5px;
+  box-shadow:0 0 6px var(--gold);
+}
+
+/* ── CTA BUTTON ── */
+.btn-gold{
+  display:inline-block;
+  font-family:'Cinzel',serif;
+  font-weight:600;font-size:.72rem;
+  letter-spacing:.32em;text-transform:uppercase;
+  color:#0a0600;
+  background:linear-gradient(90deg,#7a5c1e,#d4af72,#f5d98b,#d4af72,#7a5c1e);
+  background-size:300% 100%;
+  border:none;padding:18px 40px;
+  cursor:pointer;width:100%;
+  transition:background-position .6s ease,box-shadow .3s,transform .3s;
+  text-decoration:none;
+}
+.btn-gold:hover{
+  background-position:100% 0;
+  box-shadow:0 0 30px rgba(212,175,114,.5),0 0 60px rgba(212,175,114,.2);
+  transform:translateY(-2px);
+}
+.btn-outline{
+  display:inline-block;
+  font-family:'Cinzel',serif;
+  font-weight:600;font-size:.72rem;
+  letter-spacing:.32em;text-transform:uppercase;
+  color:var(--gold);
+  background:transparent;
+  border:1px solid rgba(212,175,114,.35);
+  padding:17px 36px;
+  cursor:pointer;
+  transition:border-color .3s,box-shadow .3s,transform .3s;
+  text-decoration:none;
+}
+.btn-outline:hover{
+  border-color:rgba(212,175,114,.7);
+  box-shadow:0 0 20px rgba(212,175,114,.15);
+  transform:translateY(-2px);
+}
+.fine-print{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-size:.88rem;
+  color:rgba(240,232,212,.3);
+  text-align:center;
+  margin-top:20px;
+}
+.fine-print a{color:rgba(212,175,114,.4);text-decoration:underline;cursor:pointer}
+
+/* ── SECTION 8: FINAL CTA ── */
+#s8{text-align:center}
+#s8 .section-heading{margin:0 auto}
+#s8 .section-body{margin:24px auto 0;text-align:center}
+.cta-buttons{
+  display:flex;flex-wrap:wrap;gap:20px;
+  justify-content:center;
+  margin-top:48px;
+}
+.cta-buttons .btn-gold{width:auto}
+.cta-link{
+  font-family:'Cinzel',serif;
+  font-size:.58rem;letter-spacing:.28em;
+  color:rgba(212,175,114,.35);
+  text-transform:uppercase;
+  margin-top:28px;
+  text-align:center;
+}
+.cta-link a{color:rgba(212,175,114,.35);text-decoration:none;cursor:pointer}
+.cta-link a:hover{color:rgba(212,175,114,.6)}
+
+/* ── FOOTER ── */
+footer{
+  text-align:center;
+  padding:48px 20px;
+  font-family:'Cinzel',serif;
+  font-size:.58rem;letter-spacing:.28em;
+  color:rgba(212,175,114,.3);
+  text-transform:uppercase;
+  border-top:1px solid rgba(212,175,114,.08);
+}
+
+/* ── MOBILE ADJUSTMENTS ── */
+@media(max-width:768px){
+  .hero-headline{font-size:clamp(3rem,13vw,5rem)}
+  #s3 .cards-grid{grid-template-columns:1fr}
+  .day-card:not(:nth-child(3n)){border-right:none}
+}
+@media(max-width:480px){
+  .price-box{padding:32px 20px}
+  .btn-gold{letter-spacing:.18em;font-size:.66rem}
+}
+
+/* ── REDUCED MOTION ── */
+@media(prefers-reduced-motion:reduce){
+  .R{transition:opacity .3s;filter:none;transform:none}
+  .R.in{opacity:1}
+  #cursor-dot,#cursor-ring{display:none}
+  .dust{display:none}
+  @keyframes grain{0%,100%{transform:none}}
+}
+</style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+
+<!-- Progress Bar -->
+<div id="progress-bar"></div>
+
+<!-- Grain -->
+<div id="grain" aria-hidden="true"></div>
+
+<!-- Gold Dust -->
+<div class="dust-container" id="dust-container" aria-hidden="true"></div>
+
+<!-- Flash overlay -->
+<div id="flash-overlay" aria-hidden="true"></div>
+
+<!-- ═══════════════════════════════════════
+     ACT 1 — THE DOOR
+════════════════════════════════════════ -->
+<div id="act1">
+  <div id="act1-sticky">
+    <canvas id="three-canvas"></canvas>
+
+    <!-- Hero Text -->
+    <div id="hero-text">
+      <p class="hero-eyebrow">Kritika Khurana</p>
+      <h1 class="hero-headline">Soul Records</h1>
+      <p class="hero-italic">Open Your Soul Records.</p>
+      <p class="hero-sub">The answers you have been searching for everywhere outside of you have been sitting inside your soul this whole time.</p>
+    </div>
+
+    <!-- Scroll Cue -->
+    <div id="scroll-cue" aria-hidden="true">
+      <span class="cue-label">Step Through</span>
+      <div class="cue-line"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     ACT 2 — INSIDE THE RECORDS
+════════════════════════════════════════ -->
+<div id="act2">
+
+  <!-- SECTION 1: THE PROBLEM -->
+  <div class="section" id="s1">
+    <p class="section-eyebrow R">Why You Are Here</p>
+    <h2 class="section-heading R" style="margin:0 auto">You have done the work. Read the books. Done the healing. And something still feels unresolved.</h2>
+    <p class="section-body R">That loop you keep finding yourself in, the relationship that echoes a past one, the block that shows up no matter how much you work on your mindset, the grief or fear that has no obvious origin. It is not because you have not healed enough. It is because the root of it is not in this lifetime. Your soul has lived before. It has made agreements, carried wounds, and built patterns across multiple lifetimes, and those are still running quietly underneath everything you do today. That is what the Akashic Records hold. And that is why reading them changes things that nothing else has been able to.</p>
+  </div>
+
+  <!-- SECTION 2: WHAT ARE THE RECORDS -->
+  <div class="section" id="s2">
+    <p class="section-eyebrow R">The Akashic Records</p>
+    <h2 class="section-heading R">Every single thing your soul has ever lived through is stored somewhere. I will show you how to read it.</h2>
+    <div class="s2-grid">
+      <div>
+        <p class="section-body R" style="margin-top:0">The Akashic Records are a living field, a cosmic archive of your soul's entire journey. Every past life. Every karmic pattern. Every contract your soul agreed to before this one began. Most people go their whole lives without knowing this is accessible to them. Some hear about it and think it is for special people with psychic gifts. It is not. Your records belong to you. The ability to open them is something any soul can develop. My job is to hold the space while you learn to do it yourself.</p>
+        <blockquote class="pull-quote R">That pattern keeping you stuck, that fear with no name, that relationship you keep recreating. It is not random. It has a story. And that story lives in your records.</blockquote>
+      </div>
+      <div class="R" id="bookcase-wrap">
+        <div id="bookcase"></div>
+        <p class="bookcase-label">The Akashic Library</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: THE FOUR DAYS -->
+  <div class="section" id="s3">
+    <p class="section-eyebrow R">The Four Days</p>
+    <h2 class="section-heading R">Four days. Live. Just us. Inside your records.</h2>
+    <p class="R" style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:rgba(240,232,212,.55);margin-top:18px;max-width:680px;line-height:1.6">This is not a course you consume passively. Every session is a real-time experience. I am in your records with you, watching, guiding, and helping you trust what you are receiving.</p>
+    <div class="cards-grid R">
+      <div class="day-card"><span class="card-label">Day One</span><h3 class="card-title">What the Records Actually Are</h3><p class="card-body">Not theory. We go straight into the foundations of the Akashic field, what it is, how it holds your soul's history, and why you have every right to access it. By the end of this session you will not just understand the records. You will feel them.</p></div>
+      <div class="day-card"><span class="card-label">Day Two</span><h3 class="card-title">Opening and Closing Safely</h3><p class="card-body">The opening prayer. The exact protocol. The state of mind you need to enter in. You practice opening your records with me in the space with you so you feel held, clear, and safe the entire time. And you learn to close properly so you do not walk around leaking energy all day.</p></div>
+      <div class="day-card"><span class="card-label">Day Three</span><h3 class="card-title">Past Lives, Karma and Soul Contracts</h3><p class="card-body">This is where the deep work begins. We enter the lives that are actively shaping this one. The karmic loops. The agreements your soul made, sometimes with people who are still in your life right now. You start to see why things are the way they are. And we begin releasing what is ready to go.</p></div>
+      <div class="day-card"><span class="card-label">Day Four</span><h3 class="card-title">Your Council of Masters and Guides</h3><p class="card-body">Your soul does not travel alone. There are beings assigned to you, Masters, Teachers, Loved Ones who have crossed over, and in this session you meet them. People often describe this as the most profound session. It does not feel like an exercise. It feels like coming home.</p></div>
+      <div class="day-card"><span class="card-label">Throughout</span><h3 class="card-title">Live Readings with Real Feedback</h3><p class="card-body">You read. I observe. I tell you what is coming through with clarity, where you are second-guessing yourself unnecessarily, and where to trust what arrives. This is where the self-doubt starts to quiet.</p></div>
+      <div class="day-card"><span class="card-label">The Method</span><h3 class="card-title">Soul Script Healing</h3><p class="card-body">A process I channel to help you actively rewrite the soul agreements that are no longer yours to carry. This is not journalling or visualisation. This is working directly in the records to dissolve patterns at the level they were created.</p></div>
+    </div>
+  </div>
+
+  <!-- SECTION 4: IS THIS FOR YOU -->
+  <div class="section" id="s4">
+    <p class="section-eyebrow R">Who This Is For</p>
+    <h2 class="section-heading R" style="max-width:820px">If any of this sounds like something you have thought in the last six months, you are in the right place.</h2>
+    <div class="rows-container R">
+      <div class="for-row"><div class="for-num">I</div><div class="for-text">You have tried therapy, coaching, journalling, and you still feel like you are circling something you cannot quite get to.</div></div>
+      <div class="for-row"><div class="for-num">II</div><div class="for-text">There is a pattern in your life, a relationship dynamic, a recurring block, a feeling, that you cannot trace to anything in this lifetime.</div></div>
+      <div class="for-row"><div class="for-num">III</div><div class="for-text">You feel drawn to past lives, soul contracts, and the idea that your story is older and bigger than this one lifetime.</div></div>
+      <div class="for-row"><div class="for-num">IV</div><div class="for-text">You want to stop relying on other people to read for you. You want your own direct channel to your own guidance.</div></div>
+      <div class="for-row"><div class="for-num">V</div><div class="for-text">Something in you already knows this is real. You are just ready to stop being on the outside of it.</div></div>
+    </div>
+  </div>
+
+  <!-- SECTION 5: HOW IT WORKS -->
+  <div class="section" id="s5">
+    <p class="section-eyebrow R">The Container</p>
+    <h2 class="section-heading R">Just you, me, and eight hours inside your records.</h2>
+    <div class="format-row R">
+      <div class="format-cell"><span class="format-label">4 Days</span><div class="format-value">Two hours live together each day</div><p class="format-desc">&nbsp;</p></div>
+      <div class="format-cell"><span class="format-label">1:1 Only</span><div class="format-value">No group calls. No shared space. This is your time.</div><p class="format-desc">&nbsp;</p></div>
+      <div class="format-cell"><span class="format-label">Live Zoom</span><div class="format-value">Not recorded. Your presence is the whole point.</div><p class="format-desc">&nbsp;</p></div>
+      <div class="format-cell"><span class="format-label">Online</span><div class="format-value">Wherever you are in the world.</div><p class="format-desc">&nbsp;</p></div>
+    </div>
+  </div>
+
+  <!-- SECTION 6: TESTIMONIALS -->
+  <div class="section" id="s6">
+    <p class="section-eyebrow R">From Students Who Walked In</p>
+    <h2 class="section-heading R">They had the same doubts you do.</h2>
+    <p class="section-body R">These are not polished reviews. They are honest accounts of what happened when someone finally sat with their own soul's story.</p>
+    <div style="margin-top:48px">
+      <div class="testi-card R">
+        <div class="testi-video" style="min-height:200px">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        </div>
+        <div class="testi-content">
+          <p class="testi-quote">"I had been in therapy for years working on one particular pattern. On day three we found the soul contract underneath it, an agreement made lifetimes ago that I had never even known was there. That one session reached somewhere therapy never could."</p>
+          <p class="testi-name">[Name]</p>
+          <p class="testi-role">Soul Records Student</p>
+        </div>
+      </div>
+      <div class="testi-card R">
+        <div class="testi-video" style="min-height:200px">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        </div>
+        <div class="testi-content">
+          <p class="testi-quote">"I cried for an hour after meeting my Council. Not because it was overwhelming. Because somewhere in me, I had always known they were there. I just had never had a language for it before."</p>
+          <p class="testi-name">[Name]</p>
+          <p class="testi-role">Soul Records Student</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 7: INVESTMENT -->
+  <div class="section" id="s7">
+    <div id="invest"></div>
+    <p class="section-eyebrow R">The Energy Exchange</p>
+    <h2 class="section-heading R">You are not paying for four days. You are paying for the ability to access your own records for the rest of your life.</h2>
+    <p class="section-body R">Most people who invest in this come back to their records again and again, when they are facing a big decision, when an old pattern resurfaces, when they need to hear something their thinking mind cannot give them. This is not a course you do and move on from. It is a skill that stays with you permanently.</p>
+    <div class="price-box R">
+      <div class="corner corner-tl"></div>
+      <div class="corner corner-tr"></div>
+      <div class="corner corner-bl"></div>
+      <div class="corner corner-br"></div>
+      <div class="price-glow"></div>
+      <p class="price-label">Sacred Investment</p>
+      <p class="price-strikethrough">Value of Rs. 1,00,000+</p>
+      <p class="price-main">Rs. 35,000</p>
+      <p class="price-note">One-time · All-inclusive · No surprises</p>
+      <div class="price-divider"></div>
+      <ul class="bullet-list">
+        <li><span class="diamond"></span>4 live 1:1 sessions with Kritika, 2 hours each</li>
+        <li><span class="diamond"></span>Complete Soul Records opening and closing protocol</li>
+        <li><span class="diamond"></span>Past life karma and soul contract navigation</li>
+        <li><span class="diamond"></span>Meeting and working with your Council of Masters</li>
+        <li><span class="diamond"></span>The Soul Script Method, healing from the root</li>
+        <li><span class="diamond"></span>Live reading practice with personalised real-time feedback</li>
+        <li><span class="diamond"></span>WhatsApp support between sessions</li>
+        <li><span class="diamond"></span>The skill stays with you, read your records independently for life</li>
+      </ul>
+      <a href="#invest" class="btn-gold">Learn to Access My Records</a>
+      <p class="fine-print"><a href="https://www.instagram.com/kritikakapoor0309" target="_blank" rel="noopener">Have a question?</a></p>
+    </div>
+  </div>
+
+  <!-- SECTION 8: FINAL CTA -->
+  <div class="section" id="s8">
+    <p class="section-eyebrow R">The Records Are Open</p>
+    <h2 class="section-heading R">Your soul has been waiting for you to come home to yourself.</h2>
+    <p class="section-body R">The records were never locked. You were just never shown the door. Now you know it is there. And somewhere in you, the part that kept reading all the way to here, already knows it is time.</p>
+    <div class="cta-buttons R">
+      <a href="#invest" class="btn-gold">Learn to Access My Records</a>
+      <a href="#invest" class="btn-outline">Start Reading My Own Records</a>
+    </div>
+    <p class="cta-link R"><a href="https://www.instagram.com/kritikakapoor0309" target="_blank" rel="noopener">Have a question?</a></p>
+  </div>
+
+</div><!-- /act2 -->
+
+<footer>Soul Records · Kritika Khurana · All Sessions Online via Zoom</footer>
+
+<!-- Three.js r128 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<script>
+// ══════════════════════════════════════════
+//  GOLD DUST PARTICLES (CSS)
+// ══════════════════════════════════════════
+(function(){
+  const container = document.getElementById('dust-container');
+  for(let i=0;i<40;i++){
+    const d = document.createElement('div');
+    d.className='dust';
+    d.style.cssText=`
+      left:${Math.random()*100}%;
+      --dur:${6+Math.random()*10}s;
+      --delay:${Math.random()*10}s;
+      --dx:${(Math.random()-.5)*60}px;
+      width:${1+Math.random()*2}px;
+      height:${1+Math.random()*2}px;
+    `;
+    container.appendChild(d);
+  }
+})();
+
+// ══════════════════════════════════════════
+//  CUSTOM CURSOR
+// ══════════════════════════════════════════
+(function(){
+  const dot=document.getElementById('cursor-dot');
+  const ring=document.getElementById('cursor-ring');
+  let mx=0,my=0;
+  document.addEventListener('mousemove',e=>{
+    mx=e.clientX;my=e.clientY;
+    dot.style.left=mx+'px';dot.style.top=my+'px';
+    ring.style.left=mx+'px';ring.style.top=my+'px';
+  });
+})();
+
+// ══════════════════════════════════════════
+//  PROGRESS BAR
+// ══════════════════════════════════════════
+(function(){
+  const bar=document.getElementById('progress-bar');
+  window.addEventListener('scroll',()=>{
+    const pct=window.scrollY/(document.body.scrollHeight-window.innerHeight)*100;
+    bar.style.width=Math.min(pct,100)+'%';
+  },{passive:true});
+})();
+
+// ══════════════════════════════════════════
+//  INTERSECTION OBSERVER REVEAL
+// ══════════════════════════════════════════
+(function(){
+  const els=document.querySelectorAll('.R');
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target);}});
+  },{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+  els.forEach(el=>obs.observe(el));
+})();
+
+// ══════════════════════════════════════════
+//  CARD 3D TILT + CURSOR GLOW
+// ══════════════════════════════════════════
+(function(){
+  document.querySelectorAll('.day-card').forEach(card=>{
+    card.addEventListener('mousemove',e=>{
+      const r=card.getBoundingClientRect();
+      const x=(e.clientX-r.left)/r.width;
+      const y=(e.clientY-r.top)/r.height;
+      const rx=(y-.5)*-10;
+      const ry=(x-.5)*10;
+      card.style.transform=`perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+      card.style.setProperty('--mx',`${x*100}%`);
+      card.style.setProperty('--my',`${y*100}%`);
+    });
+    card.addEventListener('mouseleave',()=>{card.style.transform='perspective(800px) rotateX(0) rotateY(0)'});
+  });
+})();
+
+// ══════════════════════════════════════════
+//  BOOKCASE
+// ══════════════════════════════════════════
+(function(){
+  const bc=document.getElementById('bookcase');
+  const browns=['#2a1506','#3d1f08','#1e1004','#4a2810','#331a08','#5a3015','#261408','#3f2312','#180d03','#441c0a','#3b1a06','#52290d'];
+  const rowCfg=[{n:15,minH:90,maxH:120},{n:14,minH:80,maxH:110},{n:16,minH:85,maxH:115},{n:14,minH:88,maxH:118}];
+  rowCfg.forEach(cfg=>{
+    const row=document.createElement('div');
+    row.style.cssText='display:flex;align-items:flex-end;gap:2px;padding:0 4px;';
+    for(let i=0;i<cfg.n;i++){
+      const w=14+Math.floor(Math.random()*17);
+      const h=cfg.minH+Math.floor(Math.random()*(cfg.maxH-cfg.minH));
+      const c1=browns[Math.floor(Math.random()*browns.length)];
+      const c2=browns[Math.floor(Math.random()*browns.length)];
+      const bk=document.createElement('div');
+      bk.style.cssText=`
+        width:${w}px;height:${h}px;flex-shrink:0;position:relative;
+        background:linear-gradient(to right,${c1},${c2},${c1});
+        cursor:pointer;
+        transition:transform .4s cubic-bezier(.34,1.56,.64,1);
+      `;
+      // gold strip
+      const strip=document.createElement('div');
+      strip.style.cssText=`
+        position:absolute;top:${Math.floor(h*.1)}px;left:0;right:0;height:2px;
+        background:rgba(212,175,114,0.35);
+      `;
+      bk.appendChild(strip);
+      bk.addEventListener('mouseenter',()=>bk.style.transform='translateY(-16px)');
+      bk.addEventListener('mouseleave',()=>bk.style.transform='translateY(0)');
+      row.appendChild(bk);
+    }
+    bc.appendChild(row);
+    // shelf plank
+    const shelf=document.createElement('div');
+    shelf.style.cssText=`
+      height:10px;width:100%;
+      background:linear-gradient(to bottom,#3d2008,#1a0c03);
+      box-shadow:0 4px 12px rgba(0,0,0,0.7);
+      margin-bottom:2px;
+    `;
+    bc.appendChild(shelf);
+  });
+})();
+
+// ══════════════════════════════════════════
+//  THREE.JS — ACT 1
+// ══════════════════════════════════════════
+(function(){
+  const canvas=document.getElementById('three-canvas');
+  const W=()=>window.innerWidth;
+  const H=()=>window.innerHeight;
+
+  const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:false});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  renderer.setSize(W(),H());
+  renderer.setClearColor(0x040100,1);
+  renderer.toneMapping=THREE.ReinhardToneMapping;
+  renderer.toneMappingExposure=1.2;
+
+  const scene=new THREE.Scene();
+  scene.fog=new THREE.FogExp2(0x0a0500,0.03);
+
+  const camera=new THREE.PerspectiveCamera(60,W()/H(),.1,200);
+  camera.position.set(0,0,18);
+
+  // Ambient + warm lights
+  const ambLight=new THREE.AmbientLight(0x1a0d00,0.8);
+  scene.add(ambLight);
+  const ptLight1=new THREE.PointLight(0xffd580,3,30);
+  ptLight1.position.set(0,3,5);
+  scene.add(ptLight1);
+  const ptLight2=new THREE.PointLight(0xff9900,1.5,20);
+  ptLight2.position.set(-4,-2,8);
+  scene.add(ptLight2);
+  const ptLight3=new THREE.PointLight(0xffd580,2,15);
+  ptLight3.position.set(4,1,3);
+  scene.add(ptLight3);
+
+  // ── STARFIELD ──
+  const starCount=1200;
+  const starGeo=new THREE.BufferGeometry();
+  const starPos=new Float32Array(starCount*3);
+  const starCol=new Float32Array(starCount*3);
+  for(let i=0;i<starCount;i++){
+    starPos[i*3]=( Math.random()-.5)*160;
+    starPos[i*3+1]=(Math.random()-.5)*80+10;
+    starPos[i*3+2]=(Math.random()-.5)*120-10;
+    const warm=Math.random();
+    starCol[i*3]=1;
+    starCol[i*3+1]=.85+warm*.15;
+    starCol[i*3+2]=.5+warm*.3;
+  }
+  starGeo.setAttribute('position',new THREE.BufferAttribute(starPos,3));
+  starGeo.setAttribute('color',new THREE.BufferAttribute(starCol,3));
+  const starMat=new THREE.PointsMaterial({size:.12,vertexColors:true,transparent:true,opacity:.8,sizeAttenuation:true});
+  scene.add(new THREE.Points(starGeo,starMat));
+
+  // ── CLOUD PLANES ──
+  const cloudTex=makeCloudTexture();
+  for(let i=0;i<6;i++){
+    const mat=new THREE.MeshBasicMaterial({map:cloudTex,transparent:true,opacity:.13+Math.random()*.1,depthWrite:false,side:THREE.DoubleSide,color:new THREE.Color(0.45,0.22,0.05)});
+    const mesh=new THREE.Mesh(new THREE.PlaneGeometry(40+Math.random()*20,10+Math.random()*8),mat);
+    mesh.position.set((Math.random()-.5)*10,-3+Math.random()*4,(Math.random()-.5)*8+2);
+    mesh.rotation.x=-Math.PI/2+(.3*(Math.random()-.5));
+    mesh.userData.cloudSpeed=.0002+Math.random()*.0003;
+    mesh.userData.cloudDir=Math.random()>.5?1:-1;
+    scene.add(mesh);
+  }
+  function makeCloudTexture(){
+    const size=256;const c=document.createElement('canvas');c.width=size;c.height=size;
+    const ctx=c.getContext('2d');
+    const grd=ctx.createRadialGradient(size/2,size/2,0,size/2,size/2,size/2);
+    grd.addColorStop(0,'rgba(200,100,20,0.9)');
+    grd.addColorStop(.5,'rgba(120,50,10,0.4)');
+    grd.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=grd;ctx.fillRect(0,0,size,size);
+    return new THREE.CanvasTexture(c);
+  }
+
+  // ── DOOR GROUP ──
+  const doorGroup=new THREE.Group();
+  scene.add(doorGroup);
+
+  // Door inner glow panel
+  const innerGlowMat=new THREE.MeshBasicMaterial({color:0xffd060,transparent:true,opacity:.95});
+  const innerPanel=new THREE.Mesh(new THREE.PlaneGeometry(2.2,4),innerGlowMat);
+  innerPanel.position.set(0,.4,-.05);
+  doorGroup.add(innerPanel);
+
+  // Door arch shape
+  const archShape=new THREE.Shape();
+  archShape.moveTo(-1.8,0);
+  archShape.lineTo(-1.8,4);
+  archShape.quadraticCurveTo(-1.8,6,0,6.2);
+  archShape.quadraticCurveTo(1.8,6,1.8,4);
+  archShape.lineTo(1.8,0);
+  archShape.lineTo(1.45,0);
+  archShape.lineTo(1.45,4);
+  archShape.quadraticCurveTo(1.45,5.65,0,5.85);
+  archShape.quadraticCurveTo(-1.45,5.65,-1.45,4);
+  archShape.lineTo(-1.45,0);
+  archShape.lineTo(-1.8,0);
+
+  const archGeo=new THREE.ShapeGeometry(archShape);
+  const archMat=new THREE.MeshStandardMaterial({color:0xd4a843,metalness:.92,roughness:.12,emissive:new THREE.Color(0.4,0.25,0.02),emissiveIntensity:.8});
+  const archMesh=new THREE.Mesh(archGeo,archMat);
+  archMesh.position.z=.1;
+  doorGroup.add(archMesh);
+
+  // Columns - decorative rings
+  [-1.625,1.625].forEach(xPos=>{
+    for(let r=0;r<8;r++){
+      const ringGeo=new THREE.TorusGeometry(.18,.04,8,20);
+      const ringMat=new THREE.MeshStandardMaterial({color:0xe8bb55,metalness:.95,roughness:.1,emissive:new THREE.Color(0.3,0.18,0.01),emissiveIntensity:.6});
+      const ring=new THREE.Mesh(ringGeo,ringMat);
+      ring.position.set(xPos,.5+r*.5,.15);
+      ring.rotation.y=Math.PI/2;
+      doorGroup.add(ring);
+    }
+    // Column shaft
+    const shaftGeo=new THREE.CylinderGeometry(.14,.14,4.2,12);
+    const shaftMat=new THREE.MeshStandardMaterial({color:0xc49a30,metalness:.9,roughness:.15,emissive:new THREE.Color(0.25,0.15,0.01),emissiveIntensity:.5});
+    const shaft=new THREE.Mesh(shaftGeo,shaftMat);
+    shaft.position.set(xPos,2.1,.15);
+    doorGroup.add(shaft);
+    // Capital
+    const capGeo=new THREE.BoxGeometry(.44,.22,.22);
+    const cap=new THREE.Mesh(capGeo,archMat);
+    cap.position.set(xPos,4.3,.15);
+    doorGroup.add(cap);
+    // Base
+    const baseGeo=new THREE.BoxGeometry(.44,.22,.22);
+    const base=new THREE.Mesh(baseGeo,archMat);
+    base.position.set(xPos,-.1,.15);
+    doorGroup.add(base);
+  });
+
+  // Crown ornament
+  const crownGeo=new THREE.ConeGeometry(.35,.7,8);
+  const crownMat=new THREE.MeshStandardMaterial({color:0xf0c050,metalness:.98,roughness:.08,emissive:new THREE.Color(0.5,0.3,0.02),emissiveIntensity:1});
+  const crown=new THREE.Mesh(crownGeo,crownMat);
+  crown.position.set(0,7.1,.2);
+  doorGroup.add(crown);
+  // Crown base
+  const crownBaseGeo=new THREE.TorusGeometry(.4,.08,8,20);
+  const crownBase=new THREE.Mesh(crownBaseGeo,crownMat);
+  crownBase.position.set(0,6.75,.2);
+  doorGroup.add(crownBase);
+
+  // Lintel
+  const lintelGeo=new THREE.BoxGeometry(3.8,.22,.2);
+  const lintel=new THREE.Mesh(lintelGeo,archMat);
+  lintel.position.set(0,-.12,.1);
+  doorGroup.add(lintel);
+
+  // ── OUTER BLOOM (sprite) ──
+  const bloomTex=makeBloomTex();
+  const bloomMat=new THREE.SpriteMaterial({map:bloomTex,transparent:true,opacity:.7,depthWrite:false,blending:THREE.AdditiveBlending,color:new THREE.Color(1,.75,.2)});
+  const bloom=new THREE.Sprite(bloomMat);
+  bloom.scale.set(16,18,1);
+  bloom.position.set(0,3,0);
+  doorGroup.add(bloom);
+
+  // Secondary smaller bloom
+  const bloom2Mat=new THREE.SpriteMaterial({map:bloomTex,transparent:true,opacity:.9,depthWrite:false,blending:THREE.AdditiveBlending,color:new THREE.Color(1,.9,.4)});
+  const bloom2=new THREE.Sprite(bloom2Mat);
+  bloom2.scale.set(7,9,1);
+  bloom2.position.set(0,3,.05);
+  doorGroup.add(bloom2);
+
+  function makeBloomTex(){
+    const s=256;const c=document.createElement('canvas');c.width=s;c.height=s;
+    const ctx=c.getContext('2d');
+    const g=ctx.createRadialGradient(s/2,s/2,0,s/2,s/2,s/2);
+    g.addColorStop(0,'rgba(255,240,160,1)');
+    g.addColorStop(.2,'rgba(255,200,80,.6)');
+    g.addColorStop(.5,'rgba(200,130,20,.2)');
+    g.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=g;ctx.fillRect(0,0,s,s);
+    return new THREE.CanvasTexture(c);
+  }
+
+  // ── LIGHT RAYS ──
+  const rayCount=12;
+  const rays=[];
+  for(let i=0;i<rayCount;i++){
+    const angle=(i/rayCount)*Math.PI*2;
+    const len=4+Math.random()*4;
+    const rayGeo=new THREE.PlaneGeometry(.08,len);
+    const rayMat=new THREE.MeshBasicMaterial({color:0xffd87a,transparent:true,opacity:.12+Math.random()*.1,depthWrite:false,side:THREE.DoubleSide,blending:THREE.AdditiveBlending});
+    const ray=new THREE.Mesh(rayGeo,rayMat);
+    ray.position.set(Math.cos(angle)*1.2,Math.sin(angle)*1.2+3,.08);
+    ray.rotation.z=angle+Math.PI/2;
+    doorGroup.add(ray);
+    rays.push({mesh:ray,angle,phase:Math.random()*Math.PI*2,speed:.4+Math.random()*.4});
+  }
+
+  // ── SPARKLE PARTICLES ──
+  const spkCount=180;
+  const spkGeo=new THREE.BufferGeometry();
+  const spkPos=new Float32Array(spkCount*3);
+  const spkVel=[];
+  for(let i=0;i<spkCount;i++){
+    spkPos[i*3]=(Math.random()-.5)*6;
+    spkPos[i*3+1]=-2+Math.random()*8;
+    spkPos[i*3+2]=(Math.random()-.5)*2;
+    spkVel.push({vx:(Math.random()-.5)*.005,vy:.005+Math.random()*.012,vz:(Math.random()-.5)*.003,life:Math.random()});
+  }
+  spkGeo.setAttribute('position',new THREE.BufferAttribute(spkPos,3));
+  const spkMat=new THREE.PointsMaterial({color:0xffd860,size:.07,transparent:true,opacity:.85,sizeAttenuation:true,blending:THREE.AdditiveBlending});
+  const spkPoints=new THREE.Points(spkGeo,spkMat);
+  doorGroup.add(spkPoints);
+
+  doorGroup.position.set(0,-1.2,0);
+
+  // ── SCROLL-DRIVEN CAMERA ──
+  const act1El=document.getElementById('act1');
+  const heroText=document.getElementById('hero-text');
+  const scrollCue=document.getElementById('scroll-cue');
+  const flashOverlay=document.getElementById('flash-overlay');
+
+  let lastTime=0;
+  function animate(time){
+    requestAnimationFrame(animate);
+    const dt=(time-lastTime)*.001;lastTime=time;
+
+    // Sparkle update
+    const pa=spkGeo.attributes.position.array;
+    for(let i=0;i<spkCount;i++){
+      const v=spkVel[i];
+      pa[i*3]+=v.vx;
+      pa[i*3+1]+=v.vy;
+      pa[i*3+2]+=v.vz;
+      v.life+=dt*.1;
+      if(pa[i*3+1]>6||v.life>1){
+        pa[i*3]=(Math.random()-.5)*6;
+        pa[i*3+1]=-2;
+        pa[i*3+2]=(Math.random()-.5)*2;
+        v.life=0;
+      }
+    }
+    spkGeo.attributes.position.needsUpdate=true;
+
+    // Ray flicker
+    rays.forEach(r=>{
+      r.mesh.material.opacity=.08+Math.sin(time*.001*r.speed+r.phase)*.06;
+    });
+
+    // Bloom pulse
+    bloomMat.opacity=.55+Math.sin(time*.0008)*.15;
+    bloom2Mat.opacity=.75+Math.sin(time*.001+1)*.15;
+
+    // Crown glow
+    crownMat.emissiveIntensity=.8+Math.sin(time*.0012)*.4;
+
+    // Inner panel flicker
+    innerGlowMat.opacity=.88+Math.sin(time*.0015)*.07;
+
+    // Scroll-driven camera
+    const scrollTop=window.scrollY;
+    const act1H=act1El.offsetHeight-window.innerHeight;
+    const t=Math.min(Math.max(scrollTop/act1H,0),1);
+
+    // Camera moves from z=18 to z=-0.5 (through door)
+    camera.position.z=18-t*18.5;
+    camera.position.y=t*-.5;
+    camera.fov=60+t*10;
+    camera.updateProjectionMatrix();
+
+    // Hero text: fades and scales 0..0.5
+    const heroT=Math.min(t/.5,1);
+    heroText.style.opacity=1-heroT;
+    heroText.style.transform=`scale(${1-heroT*.05})`;
+    scrollCue.style.opacity=Math.max(0,1-t*4);
+
+    // Flash: peak at t=0.8, fade by t=1.0
+    let flashOp=0;
+    if(t>.6&&t<1){
+      const ft=(t-.6)/.4;// 0..1
+      flashOp=ft<.5?ft*2:(1-ft)*2;// triangle peak at 0.5 (t=0.8)
+    }
+    flashOverlay.style.opacity=flashOp;
+
+    // Bloom intensity driven by proximity
+    bloom.scale.set(16+t*8,18+t*10,1);
+    bloom2.scale.set(7+t*5,9+t*6,1);
+
+    // Cloud plane drift
+    scene.children.forEach(ch=>{
+      if(ch.userData.cloudSpeed){
+        ch.position.x+=ch.userData.cloudSpeed*ch.userData.cloudDir;
+        if(Math.abs(ch.position.x)>15)ch.userData.cloudDir*=-1;
+      }
+    });
+
+    renderer.render(scene,camera);
+  }
+  requestAnimationFrame(animate);
+
+  window.addEventListener('resize',()=>{
+    camera.aspect=W()/H();
+    camera.updateProjectionMatrix();
+    renderer.setSize(W(),H());
+  },{passive:true});
+})();
+</script>
+</body>
+</html>
