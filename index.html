@@ -48,13 +48,17 @@ body{background:var(--bg);color:var(--cr);font-family:'Plus Jakarta Sans',sans-s
 #a1s{position:sticky;top:0;height:100vh;overflow:hidden}
 #cv{position:absolute;inset:0;width:100%;height:100%}
 
-/* HERO CONTENT */
+/* HERO CONTENT — centered */
 #hc{
   position:absolute;inset:0;z-index:20;
   display:flex;flex-direction:column;
+  align-items:center;
   justify-content:center;
-  padding:0 clamp(28px,7vw,120px);
+  text-align:center;
+  padding:0 clamp(28px,7vw,100px);
   will-change:opacity,transform;
+  /* text readability veil — dark centre, fades out to edges */
+  background:radial-gradient(ellipse 60% 70% at 50% 55%,rgba(2,1,0,.55) 0%,rgba(2,1,0,.2) 55%,transparent 100%);
 }
 .hline{overflow:hidden}
 .hline-inner{display:block;transform:translateY(110%);opacity:0;transition:transform 1.2s cubic-bezier(.16,1,.3,1),opacity 1.2s ease}
@@ -70,15 +74,17 @@ body{background:var(--bg);color:var(--cr);font-family:'Plus Jakarta Sans',sans-s
   font-family:'Gloock',serif;
   font-size:clamp(5rem,14vw,13rem);
   font-weight:400;color:#fff;
-  line-height:.88;
+  line-height:1.0;
   letter-spacing:-.01em;
 }
+/* extra breathing room between Soul and Records */
+.h-title+.hline{margin-top:clamp(4px,1vh,14px)}
 .h-title em{font-style:italic;color:var(--gb)}
 .h-rule{
-  width:clamp(60px,8vw,120px);height:1px;
-  background:linear-gradient(90deg,var(--g),transparent);
-  margin:clamp(18px,3vh,32px) 0;
-  transform:scaleX(0);transform-origin:left;
+  width:clamp(48px,6vw,96px);height:1px;
+  background:linear-gradient(90deg,transparent,var(--g),transparent);
+  margin:clamp(22px,4vh,40px) auto;
+  transform:scaleX(0);transform-origin:center;
   transition:transform 1s cubic-bezier(.16,1,.3,1) .9s;
 }
 .h-rule.up{transform:scaleX(1)}
@@ -90,15 +96,16 @@ body{background:var(--bg);color:var(--cr);font-family:'Plus Jakarta Sans',sans-s
 .h-sub{
   font-family:'Plus Jakarta Sans',sans-serif;font-weight:200;
   font-size:clamp(.75rem,.95vw,.9rem);
-  color:rgba(237,228,208,.45);
-  max-width:400px;line-height:1.9;
+  color:rgba(237,228,208,.52);
+  max-width:460px;line-height:1.9;
   margin-top:clamp(10px,1.8vh,18px);
   letter-spacing:.02em;
+  text-align:center;
 }
 
-/* scroll indicator — bottom right */
+/* scroll indicator — bottom center */
 #si{
-  position:absolute;right:clamp(28px,5vw,80px);bottom:48px;
+  position:absolute;bottom:44px;left:50%;transform:translateX(-50%);
   display:flex;flex-direction:column;align-items:center;gap:10px;
   opacity:0;transition:opacity 1s .8s;
 }
@@ -140,8 +147,21 @@ body{background:var(--bg);color:var(--cr);font-family:'Plus Jakarta Sans',sans-s
 ═══════════════════════════════ */
 #a2{background:var(--bg);position:relative;z-index:1}
 
+/* warm amber glow that bleeds from the top of Act 2, carrying portal warmth down */
+#a2::before{
+  content:'';
+  position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:900px;max-width:100%;height:520px;
+  background:radial-gradient(ellipse at 50% 0%,rgba(200,130,20,.12) 0%,rgba(180,100,10,.06) 35%,transparent 70%);
+  pointer-events:none;z-index:0;
+}
+
 /* section base */
 .s{padding:clamp(90px,12vw,160px) clamp(28px,8vw,120px);max-width:1200px;margin:0 auto;position:relative}
+/* investment section gets extra breathing room above */
+#s7{padding-top:clamp(120px,16vw,200px)}
+/* final CTA has a little more space too */
+#s8{padding-top:clamp(100px,14vw,180px);padding-bottom:clamp(100px,14vw,180px)}
 .s.center{text-align:center}
 .s.center .hd{margin:0 auto}
 .s.center .bd{margin-top:24px;margin-left:auto;margin-right:auto}
@@ -149,7 +169,7 @@ body{background:var(--bg);color:var(--cr);font-family:'Plus Jakarta Sans',sans-s
 .eye{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.38em;color:var(--g);text-transform:uppercase;margin-bottom:20px;opacity:.7}
 .hd{font-family:'Gloock',serif;font-size:clamp(1.9rem,4vw,3.2rem);font-weight:400;color:#fff;line-height:1.15;max-width:820px}
 .hd em{font-style:italic;color:rgba(255,255,255,.7)}
-.bd{font-family:'Plus Jakarta Sans',sans-serif;font-weight:300;font-size:clamp(.88rem,1.05vw,1rem);color:rgba(237,228,208,.58);line-height:1.9;max-width:720px;margin-top:28px}
+.bd{font-family:'Plus Jakarta Sans',sans-serif;font-weight:300;font-size:clamp(.88rem,1.05vw,1rem);color:rgba(237,228,208,.75);line-height:1.9;max-width:720px;margin-top:28px}
 .pull{
   border-left:1px solid var(--gm);padding:16px 26px;
   margin-top:36px;
@@ -204,7 +224,7 @@ body{background:var(--bg);color:var(--cr);font-family:'Plus Jakarta Sans',sans-s
 }
 .cl{font-family:'Cinzel',serif;font-size:.57rem;letter-spacing:.24em;color:var(--g);opacity:.62;margin-bottom:14px;display:block;font-style:italic}
 .ct{font-family:'Gloock',serif;font-size:1.2rem;font-weight:400;color:#fff;margin-bottom:13px;line-height:1.28}
-.cb{font-family:'Plus Jakarta Sans',sans-serif;font-weight:300;font-size:.85rem;color:rgba(237,228,208,.55);line-height:1.82}
+.cb{font-family:'Plus Jakarta Sans',sans-serif;font-weight:300;font-size:.85rem;color:rgba(237,228,208,.7);line-height:1.82}
 
 /* ── S4 rows ── */
 #s4 .rows{max-width:700px;margin:52px auto 0;border:1px solid var(--gx)}
@@ -724,8 +744,9 @@ window.addEventListener('load',()=>{
     scene.add(m);
   }
 
-  // ── sacred geometry 3D portal ──
+  // ── sacred geometry 3D portal ── pushed back so text sits clearly in front
   const pg=new THREE.Group();
+  pg.position.z=-2;
   scene.add(pg);
 
   function ring(r,segs,col,op){
@@ -759,25 +780,25 @@ window.addEventListener('load',()=>{
   pg.add(tri([[0,-R2],[R2*Math.cos(Math.PI/6),R2*Math.sin(Math.PI/6)],[-R2*Math.cos(Math.PI/6),R2*Math.sin(Math.PI/6)]],0xf4e4a8,.16));
   pg.add(tri([[0,R2],[R2*Math.cos(Math.PI/6),-R2*Math.sin(Math.PI/6)],[-R2*Math.cos(Math.PI/6),-R2*Math.sin(Math.PI/6)]],0xc8a45a,.16));
 
-  // Center bloom sprite
+  // Center bloom sprite — kept softer so text stays legible
   function makeBloom(){
     const s=256,c=document.createElement('canvas');c.width=s;c.height=s;
     const ctx=c.getContext('2d');
     const g=ctx.createRadialGradient(s/2,s/2,0,s/2,s/2,s/2);
     g.addColorStop(0,'rgba(255,230,120,1)');
-    g.addColorStop(.15,'rgba(220,160,40,.65)');
-    g.addColorStop(.45,'rgba(160,90,10,.18)');
+    g.addColorStop(.2,'rgba(200,140,30,.5)');
+    g.addColorStop(.55,'rgba(130,70,5,.12)');
     g.addColorStop(1,'rgba(0,0,0,0)');
     ctx.fillStyle=g;ctx.fillRect(0,0,s,s);
     return new THREE.CanvasTexture(c);
   }
   const bt=makeBloom();
-  const bloom=new THREE.Sprite(new THREE.SpriteMaterial({map:bt,transparent:true,opacity:.55,depthWrite:false,blending:THREE.AdditiveBlending,color:new THREE.Color(1,.82,.3)}));
-  bloom.scale.set(14,14,1);pg.add(bloom);
+  const bloom=new THREE.Sprite(new THREE.SpriteMaterial({map:bt,transparent:true,opacity:.38,depthWrite:false,blending:THREE.AdditiveBlending,color:new THREE.Color(1,.82,.3)}));
+  bloom.scale.set(12,12,1);pg.add(bloom);
 
-  // outer bloom (larger, dimmer)
-  const bloom2=new THREE.Sprite(new THREE.SpriteMaterial({map:bt,transparent:true,opacity:.2,depthWrite:false,blending:THREE.AdditiveBlending,color:new THREE.Color(1,.7,.2)}));
-  bloom2.scale.set(28,28,1);pg.add(bloom2);
+  // outer bloom — very wide, very dim, just adds warmth
+  const bloom2=new THREE.Sprite(new THREE.SpriteMaterial({map:bt,transparent:true,opacity:.11,depthWrite:false,blending:THREE.AdditiveBlending,color:new THREE.Color(1,.65,.15)}));
+  bloom2.scale.set(32,32,1);pg.add(bloom2);
 
   // Orbit dots
   const oN=72,oG=new THREE.BufferGeometry();
@@ -826,11 +847,10 @@ window.addEventListener('load',()=>{
     pg.rotation.z=now*.00015;
     fg.rotation.z=-now*.0003;
 
-    // bloom pulse
-    const bp=.48+Math.sin(now*.0008)*.12;
-    bloom.material.opacity=bp;
-    bloom.scale.setScalar(14+Math.sin(now*.0007)*1.8);
-    bloom2.material.opacity=.16+Math.sin(now*.0006)*.06;
+    // bloom pulse — softer to keep text readable
+    bloom.material.opacity=.32+Math.sin(now*.0008)*.08;
+    bloom.scale.setScalar(12+Math.sin(now*.0007)*1.4);
+    bloom2.material.opacity=.09+Math.sin(now*.0006)*.03;
 
     // point light pulse
     pl.intensity=4.5+Math.sin(now*.0009)*1.5;
