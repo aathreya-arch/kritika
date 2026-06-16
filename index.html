@@ -249,7 +249,8 @@ body{background:var(--bg);color:var(--cr);font-family:'Plus Jakarta Sans',sans-s
 .tc{display:flex;border:1px solid var(--gx);margin-bottom:22px;transition:border-color .4s,box-shadow .4s;cursor:default}
 .tc:hover{border-color:rgba(200,164,90,.38);box-shadow:0 8px 48px rgba(200,164,90,.06)}
 .tv{width:160px;min-width:160px;background:linear-gradient(150deg,#0e0700,#1a1000);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-.tv::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(200,164,90,.14),transparent 65%)}
+.tv::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(200,164,90,.14),transparent 65%);pointer-events:none}
+.tv iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .pb{width:42px;height:42px;border:1px solid rgba(200,164,90,.55);border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;z-index:1;transition:transform .3s,box-shadow .3s}
 .tc:hover .pb{transform:scale(1.1);box-shadow:0 0 14px rgba(200,164,90,.32)}
 .pb svg{width:13px;height:13px;fill:var(--g);margin-left:3px}
@@ -385,7 +386,7 @@ footer{text-align:center;padding:48px 20px;font-family:'Cinzel',serif;font-size:
 <div class="s center" id="s1">
   <p class="eye R">Why You Are Here</p>
   <h2 class="hd R">You have done the work. Read the books. Done the healing. And something still feels unresolved.</h2>
-  <p class="bd R">That loop you keep finding yourself in, the relationship that echoes a past one, the block that shows up no matter how much you work on your mindset, the grief or fear that has no obvious origin. It is not because you have not healed enough. It is because the root of it is not in this lifetime. Your soul has lived before. It has made agreements, carried wounds, and built patterns across multiple lifetimes, and those are still running quietly underneath everything you do today. That is what the Akashic Records hold. And that is why reading them changes things that nothing else has been able to.</p>
+  <p class="bd R">That loop you keep finding yourself in, the relationship that echoes a past one, the block that shows up no matter how much you work on your mindset, the grief or fear with no obvious origin — none of it means you haven't healed enough. It usually means the root isn't in this lifetime at all. Your soul has lived before, made agreements, carried wounds, and built patterns across many lifetimes, and a lot of that is still quietly running underneath everything you do today. That's what the Akashic Records hold, and it's why reading them can shift things nothing else has been able to.</p>
 </div>
 
 <div class="div R"></div>
@@ -396,8 +397,8 @@ footer{text-align:center;padding:48px 20px;font-family:'Cinzel',serif;font-size:
   <h2 class="hd R">Every single thing your soul has ever lived through is stored somewhere. I will show you how to read it.</h2>
   <div class="sp">
     <div>
-      <p class="bd R" style="margin-top:0">The Akashic Records are a living field, a cosmic archive of your soul's entire journey. Every past life. Every karmic pattern. Every contract your soul agreed to before this one began. Most people go their whole lives without knowing this is accessible to them. Some hear about it and think it is for special people with psychic gifts. It is not. Your records belong to you. The ability to open them is something any soul can develop. My job is to hold the space while you learn to do it yourself.</p>
-      <blockquote class="pull R">That pattern keeping you stuck, that fear with no name, that relationship you keep recreating. It is not random. It has a story. And that story lives in your records.</blockquote>
+      <p class="bd R" style="margin-top:0">The Akashic Records are a living field, a cosmic archive of your soul's entire journey — every past life, every karmic pattern, every contract your soul agreed to before this one began. Most people go their whole lives without knowing this is accessible to them, and some who do hear about it assume it's reserved for people with special psychic gifts. It isn't. Your records belong to you, and the ability to open them is something any soul can develop. My job is just to hold the space while you learn to do it yourself.</p>
+      <blockquote class="pull R">That pattern keeping you stuck, that fear with no name, that relationship you keep recreating — it isn't random. It has a story, and that story lives in your records.</blockquote>
     </div>
     <div class="R">
       <canvas id="sac" width="320" height="320" aria-label="Sacred geometry illustration"></canvas>
@@ -412,14 +413,14 @@ footer{text-align:center;padding:48px 20px;font-family:'Cinzel',serif;font-size:
 <div class="s" id="s3">
   <p class="eye R">The Four Days</p>
   <h2 class="hd R">Four days. Live. Just us. Inside your records.</h2>
-  <p class="R" style="font-family:'Gloock',serif;font-style:italic;font-size:1.08rem;color:rgba(237,228,208,.48);margin-top:16px;max-width:600px;line-height:1.65">This is not a course you consume passively. Every session is a real-time experience. I am in your records with you, watching, guiding, and helping you trust what you are receiving.</p>
+  <p class="R" style="font-family:'Gloock',serif;font-style:italic;font-size:1.08rem;color:rgba(237,228,208,.48);margin-top:16px;max-width:600px;line-height:1.65">This isn't a course you consume passively. Every session happens in real time, with me in your records alongside you, watching, guiding, and helping you trust what you're receiving.</p>
   <div class="cg R">
-    <div class="dc"><span class="cl">Day One</span><h3 class="ct">What the Records Actually Are</h3><p class="cb">Not theory. We go straight into the foundations of the Akashic field, what it is, how it holds your soul's history, and why you have every right to access it. By the end of this session you will not just understand the records. You will feel them.</p></div>
-    <div class="dc"><span class="cl">Day Two</span><h3 class="ct">Opening and Closing Safely</h3><p class="cb">The opening prayer. The exact protocol. The state of mind you need to enter in. You practice opening your records with me in the space with you so you feel held, clear, and safe the entire time. And you learn to close properly so you do not walk around leaking energy all day.</p></div>
-    <div class="dc"><span class="cl">Day Three</span><h3 class="ct">Past Lives, Karma and Soul Contracts</h3><p class="cb">This is where the deep work begins. We enter the lives that are actively shaping this one. The karmic loops. The agreements your soul made, sometimes with people who are still in your life right now. You start to see why things are the way they are. And we begin releasing what is ready to go.</p></div>
-    <div class="dc"><span class="cl">Day Four</span><h3 class="ct">Your Council of Masters and Guides</h3><p class="cb">Your soul does not travel alone. There are beings assigned to you, Masters, Teachers, Loved Ones who have crossed over, and in this session you meet them. People often describe this as the most profound session. It does not feel like an exercise. It feels like coming home.</p></div>
-    <div class="dc"><span class="cl">Throughout</span><h3 class="ct">Live Readings with Real Feedback</h3><p class="cb">You read. I observe. I tell you what is coming through with clarity, where you are second-guessing yourself unnecessarily, and where to trust what arrives. This is where the self-doubt starts to quiet.</p></div>
-    <div class="dc"><span class="cl">The Method</span><h3 class="ct">Soul Script Healing</h3><p class="cb">A process I channel to help you actively rewrite the soul agreements that are no longer yours to carry. This is not journalling or visualisation. This is working directly in the records to dissolve patterns at the level they were created.</p></div>
+    <div class="dc"><span class="cl">Day One</span><h3 class="ct">What the Records Actually Are</h3><p class="cb">We skip the theory and go straight into the foundations of the Akashic field — what it is, how it holds your soul's history, and why you have every right to access it. By the end of this session you won't just understand the records, you'll feel them.</p></div>
+    <div class="dc"><span class="cl">Day Two</span><h3 class="ct">Opening and Closing Safely</h3><p class="cb">You'll learn the opening prayer, the exact protocol, and the state of mind you need to enter. We practice opening your records together, with me right there, so you feel held, clear, and safe the entire time, and you'll learn to close properly so you're not walking around leaking energy all day.</p></div>
+    <div class="dc"><span class="cl">Day Three</span><h3 class="ct">Past Lives, Karma and Soul Contracts</h3><p class="cb">This is where the deep work begins. We enter the lives that are actively shaping this one, the karmic loops, the agreements your soul made, sometimes with people who are still in your life right now. You start to see why things are the way they are, and we begin releasing what's ready to go.</p></div>
+    <div class="dc"><span class="cl">Day Four</span><h3 class="ct">Your Council of Masters and Guides</h3><p class="cb">Your soul doesn't travel alone. There are beings assigned to you — Masters, Teachers, loved ones who have crossed over — and in this session you meet them. People often describe it as the most profound session of the four. It doesn't feel like an exercise. It feels like coming home.</p></div>
+    <div class="dc"><span class="cl">Throughout</span><h3 class="ct">Live Readings with Real Feedback</h3><p class="cb">You read, I observe, and I tell you exactly what's coming through, where you're second-guessing yourself unnecessarily, and where to trust what arrives. This is where the self-doubt starts to quiet.</p></div>
+    <div class="dc"><span class="cl">The Method</span><h3 class="ct">Soul Script Healing</h3><p class="cb">This is a process I channel to help you actively rewrite the soul agreements that are no longer yours to carry. It isn't journalling or visualisation, it's working directly in the records to dissolve patterns at the level they were created.</p></div>
   </div>
 </div>
 
@@ -458,17 +459,17 @@ footer{text-align:center;padding:48px 20px;font-family:'Cinzel',serif;font-size:
 <div class="s" id="s6">
   <p class="eye R">From Students Who Walked In</p>
   <h2 class="hd R">They had the same doubts you do.</h2>
-  <p class="bd R">These are not polished reviews. They are honest accounts of what happened when someone finally sat with their own soul's story.</p>
+  <p class="bd R">These aren't polished reviews, they're honest accounts of what happened when someone finally sat with their own soul's story.</p>
   <div style="margin-top:48px">
     <div class="tc R">
-      <div class="tv" style="min-height:190px"><div class="pb"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+      <div class="tv" style="min-height:190px"><iframe src="https://www.youtube.com/embed/tbn3FFqumzI" title="Soul Records testimonial" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
       <div class="tcon">
         <p class="tq">"I had been in therapy for years working on one particular pattern. On day three we found the soul contract underneath it, an agreement made lifetimes ago that I had never even known was there. That one session reached somewhere therapy never could."</p>
         <p class="tn">[Name]</p><p class="tr">Soul Records Student</p>
       </div>
     </div>
     <div class="tc R">
-      <div class="tv" style="min-height:190px"><div class="pb"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+      <div class="tv" style="min-height:190px"><iframe src="https://www.youtube.com/embed/pP3lhdU5Jxg" title="Soul Records testimonial" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
       <div class="tcon">
         <p class="tq">"I cried for an hour after meeting my Council. Not because it was overwhelming. Because somewhere in me, I had always known they were there. I just had never had a language for it before."</p>
         <p class="tn">[Name]</p><p class="tr">Soul Records Student</p>
@@ -484,7 +485,7 @@ footer{text-align:center;padding:48px 20px;font-family:'Cinzel',serif;font-size:
   <div id="invest"></div>
   <p class="eye R">The Energy Exchange</p>
   <h2 class="hd R">You are not paying for four days. You are paying for the ability to access your own records for the rest of your life.</h2>
-  <p class="bd R">Most people who invest in this come back to their records again and again, when they are facing a big decision, when an old pattern resurfaces, when they need to hear something their thinking mind cannot give them. This is not a course you do and move on from. It is a skill that stays with you permanently.</p>
+  <p class="bd R">Most people who invest in this come back to their records again and again — when they're facing a big decision, when an old pattern resurfaces, when they need to hear something their thinking mind can't give them. This isn't a course you do once and move on from, it's a skill that stays with you for good.</p>
   <div class="pbox R">
     <div class="co ctl"></div><div class="co ctr"></div><div class="co cbl"></div><div class="co cbr"></div>
     <div class="pg"></div>
@@ -512,7 +513,7 @@ footer{text-align:center;padding:48px 20px;font-family:'Cinzel',serif;font-size:
 <div class="s center" id="s8">
   <p class="eye R">The Records Are Open</p>
   <h2 class="hd R">Your soul has been waiting for you to come home to yourself.</h2>
-  <p class="bd R">The records were never locked. You were just never shown the door. Now you know it is there. And somewhere in you, the part that kept reading all the way to here, already knows it is time.</p>
+  <p class="bd R">The records were never locked, you were just never shown the door. Now you know it's there, and somewhere in you, the part that kept reading all the way to here already knows it's time.</p>
   <div class="ctbs R">
     <a href="#invest" class="bg">Learn to Access My Records</a>
     <a href="#invest" class="bo">Start Reading My Own Records</a>
