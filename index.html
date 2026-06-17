@@ -276,7 +276,7 @@ body{background:var(--bg);color:var(--cr);font-family:'Plus Jakarta Sans',sans-s
 #vmod{display:none;position:fixed;inset:0;z-index:99990;align-items:center;justify-content:center}
 #vmod.open{display:flex}
 #vmod-bg{position:absolute;inset:0;background:rgba(2,1,0,.88);backdrop-filter:blur(6px);cursor:pointer}
-#vmod-inner{position:relative;z-index:1;width:min(88vh * 9/16, 90vw);aspect-ratio:9/16}
+#vmod-inner{position:relative;z-index:1;width:min(calc(88vh * 9 / 16), 90vw);aspect-ratio:9/16}
 #vmod-inner iframe{width:100%;height:100%;border:none;display:block}
 #vmod-close{position:absolute;top:-38px;right:0;background:none;border:1px solid rgba(200,164,90,.35);color:var(--g);font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.2em;padding:6px 14px;cursor:pointer;transition:border-color .2s}
 #vmod-close:hover{border-color:rgba(200,164,90,.7)}
