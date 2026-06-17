@@ -246,18 +246,40 @@ body{background:var(--bg);color:var(--cr);font-family:'Plus Jakarta Sans',sans-s
 .fv{font-family:'Gloock',serif;font-size:1.3rem;color:var(--gb);line-height:1.35}
 
 /* ── S6 testi ── */
-.tc{display:flex;border:1px solid var(--gx);margin-bottom:22px;transition:border-color .4s,box-shadow .4s;cursor:default}
-.tc:hover{border-color:rgba(200,164,90,.38);box-shadow:0 8px 48px rgba(200,164,90,.06)}
-.tv{width:160px;min-width:160px;background:linear-gradient(150deg,#0e0700,#1a1000);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-.tv::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(200,164,90,.14),transparent 65%)}
-.pb{width:42px;height:42px;border:1px solid rgba(200,164,90,.55);border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;z-index:1;transition:transform .3s,box-shadow .3s}
-.tc:hover .pb{transform:scale(1.1);box-shadow:0 0 14px rgba(200,164,90,.32)}
-.pb svg{width:13px;height:13px;fill:var(--g);margin-left:3px}
-.tcon{padding:36px 38px;flex:1}
-.tq{font-family:'Gloock',serif;font-style:italic;font-size:1.06rem;color:rgba(237,228,208,.78);line-height:1.72}
-.tn{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.22em;color:var(--g);text-transform:uppercase;margin-top:22px}
-.tr{font-family:'Plus Jakarta Sans',sans-serif;font-weight:300;font-size:.76rem;color:rgba(237,228,208,.38);margin-top:4px}
-@media(max-width:560px){.tc{flex-direction:column}.tv{width:100%;height:150px;min-width:unset}}
+.tblock{display:flex;align-items:stretch;gap:0;margin-bottom:80px;border:1px solid var(--gx);transition:border-color .5s,box-shadow .5s}
+.tblock:hover{border-color:rgba(200,164,90,.32);box-shadow:0 12px 64px rgba(200,164,90,.07)}
+.tblock.rev{flex-direction:row-reverse}
+.tv{flex:0 0 46%;position:relative;min-height:420px;background:linear-gradient(150deg,#0d0600 0%,#1c1100 50%,#0a0500 100%);display:flex;align-items:center;justify-content:center;overflow:hidden;cursor:pointer}
+.tv::before{content:'';position:absolute;inset:0;background:
+  radial-gradient(ellipse at 30% 40%,rgba(200,164,90,.09),transparent 55%),
+  repeating-linear-gradient(0deg,transparent,transparent 79px,rgba(200,164,90,.025) 80px),
+  repeating-linear-gradient(90deg,transparent,transparent 79px,rgba(200,164,90,.025) 80px);pointer-events:none}
+.tv::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(200,164,90,.12),transparent 60%);pointer-events:none}
+.tv-thumb{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.35;transition:opacity .4s}
+.tblock:hover .tv-thumb{opacity:.48}
+.pb{position:relative;z-index:2;width:64px;height:64px;border:1.5px solid rgba(200,164,90,.65);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:transform .35s,box-shadow .35s,border-color .35s;background:rgba(4,2,0,.35);backdrop-filter:blur(4px)}
+.tblock:hover .pb{transform:scale(1.12);box-shadow:0 0 28px rgba(200,164,90,.4);border-color:rgba(200,164,90,.9)}
+.pb svg{width:22px;height:22px;fill:var(--g);margin-left:4px}
+.pb-ring{position:absolute;width:88px;height:88px;border:1px solid rgba(200,164,90,.22);border-radius:50%;animation:pbpulse 2.8s ease-in-out infinite}
+@keyframes pbpulse{0%,100%{transform:scale(1);opacity:.5}50%{transform:scale(1.18);opacity:.12}}
+.tcon{flex:1;padding:clamp(40px,5vw,70px) clamp(32px,4vw,60px);display:flex;flex-direction:column;justify-content:center}
+.tq{font-family:'Gloock',serif;font-style:italic;font-size:clamp(1.05rem,1.6vw,1.3rem);color:rgba(237,228,208,.82);line-height:1.78}
+.tq::before{content:'\201C';font-size:3.5rem;line-height:0;vertical-align:-.55em;color:rgba(200,164,90,.28);font-style:normal;margin-right:4px}
+.tn{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.26em;color:var(--g);text-transform:uppercase;margin-top:32px}
+.tr{font-family:'Plus Jakarta Sans',sans-serif;font-weight:300;font-size:.78rem;color:rgba(237,228,208,.38);margin-top:6px}
+@media(max-width:680px){
+  .tblock,.tblock.rev{flex-direction:column}
+  .tv{flex:0 0 auto;min-height:260px;width:100%}
+}
+
+/* ── video modal ── */
+#vmod{display:none;position:fixed;inset:0;z-index:99990;align-items:center;justify-content:center}
+#vmod.open{display:flex}
+#vmod-bg{position:absolute;inset:0;background:rgba(2,1,0,.88);backdrop-filter:blur(6px);cursor:pointer}
+#vmod-inner{position:relative;z-index:1;width:min(88vh * 9/16, 90vw);aspect-ratio:9/16}
+#vmod-inner iframe{width:100%;height:100%;border:none;display:block}
+#vmod-close{position:absolute;top:-38px;right:0;background:none;border:1px solid rgba(200,164,90,.35);color:var(--g);font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.2em;padding:6px 14px;cursor:pointer;transition:border-color .2s}
+#vmod-close:hover{border-color:rgba(200,164,90,.7)}
 
 /* ── price box ── */
 .pbox{max-width:540px;margin:64px auto 0;position:relative;border:1px solid rgba(200,164,90,.16);background:linear-gradient(170deg,#070400,#020100);padding:clamp(36px,6vw,60px) clamp(28px,5vw,52px);text-align:center}
@@ -459,21 +481,41 @@ footer{text-align:center;padding:48px 20px;font-family:'Cinzel',serif;font-size:
   <p class="eye R">From Students Who Walked In</p>
   <h2 class="hd R">They had the same doubts you do.</h2>
   <p class="bd R">These are not polished reviews. They are honest accounts of what happened when someone finally sat with their own soul's story.</p>
-  <div style="margin-top:48px">
-    <div class="tc R">
-      <div class="tv" style="min-height:190px"><div class="pb"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+  <div style="margin-top:64px">
+
+    <!-- Testimonial 1 — Leena (video left) -->
+    <div class="tblock R" data-vid="tbn3FFqumzI">
+      <div class="tv" aria-label="Play Leena's testimonial video">
+        <div class="pb-ring"></div>
+        <div class="pb"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      </div>
       <div class="tcon">
-        <p class="tq">"I had been in therapy for years working on one particular pattern. On day three we found the soul contract underneath it, an agreement made lifetimes ago that I had never even known was there. That one session reached somewhere therapy never could."</p>
-        <p class="tn">[Name]</p><p class="tr">Soul Records Student</p>
+        <p class="tq">I had been in therapy for years working on one particular pattern. On day three we found the soul contract underneath it — an agreement made lifetimes ago that I had never even known was there. That one session reached somewhere therapy never could.</p>
+        <p class="tn">Leena</p><p class="tr">Soul Records Student</p>
       </div>
     </div>
-    <div class="tc R">
-      <div class="tv" style="min-height:190px"><div class="pb"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+
+    <!-- Testimonial 2 — Linnet (video right) -->
+    <div class="tblock rev R" data-vid="pP3lhdU5Jxg">
+      <div class="tv" aria-label="Play Linnet's testimonial video">
+        <div class="pb-ring"></div>
+        <div class="pb"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      </div>
       <div class="tcon">
-        <p class="tq">"I cried for an hour after meeting my Council. Not because it was overwhelming. Because somewhere in me, I had always known they were there. I just had never had a language for it before."</p>
-        <p class="tn">[Name]</p><p class="tr">Soul Records Student</p>
+        <p class="tq">I cried for an hour after meeting my Council. Not because it was overwhelming. Because somewhere in me, I had always known they were there. I just had never had a language for it before.</p>
+        <p class="tn">Linnet</p><p class="tr">Soul Records Student</p>
       </div>
     </div>
+
+  </div>
+</div>
+
+<!-- Video Modal -->
+<div id="vmod" role="dialog" aria-modal="true" aria-label="Testimonial video">
+  <div id="vmod-bg"></div>
+  <div id="vmod-inner">
+    <button id="vmod-close" aria-label="Close video">CLOSE ✕</button>
+    <iframe id="vmod-frame" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
   </div>
 </div>
 
@@ -893,6 +935,38 @@ window.addEventListener('load',()=>{
   }
   requestAnimationFrame(animate);
   window.addEventListener('resize',()=>{cam.aspect=W()/H();cam.updateProjectionMatrix();renderer.setSize(W(),H());},{passive:true});
+})();
+</script>
+
+<script>
+(function(){
+  var mod=document.getElementById('vmod');
+  var frame=document.getElementById('vmod-frame');
+  var bg=document.getElementById('vmod-bg');
+  var closeBtn=document.getElementById('vmod-close');
+
+  function openVideo(vid){
+    frame.src='https://www.youtube.com/embed/'+vid+'?autoplay=1&rel=0&modestbranding=1';
+    mod.classList.add('open');
+    document.body.style.overflow='hidden';
+  }
+  function closeVideo(){
+    mod.classList.remove('open');
+    frame.src='';
+    document.body.style.overflow='';
+  }
+
+  document.querySelectorAll('.tblock').forEach(function(block){
+    var tv=block.querySelector('.tv');
+    var vid=block.dataset.vid;
+    if(tv&&vid){
+      tv.addEventListener('click',function(){ openVideo(vid); });
+    }
+  });
+
+  bg.addEventListener('click',closeVideo);
+  closeBtn.addEventListener('click',closeVideo);
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeVideo(); });
 })();
 </script>
 </body>
