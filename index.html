@@ -135,12 +135,12 @@ body{background:var(--bg);color:var(--cr);font-family:'Plus Jakarta Sans',sans-s
 }
 @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 .band-item{
-  font-family:'Cinzel',serif;font-size:.6rem;
+  font-family:'Cinzel',serif;font-size:.78rem;
   letter-spacing:.3em;text-transform:uppercase;
-  color:rgba(200,164,90,.4);padding:0 48px;
+  color:rgba(200,164,90,.72);padding:0 44px;
   flex-shrink:0;
 }
-.band-dot{color:var(--g);opacity:.5}
+.band-dot{color:var(--g);opacity:.65}
 
 /* ═══════════════════════════════
    ACT 2
@@ -249,7 +249,7 @@ body{background:var(--bg);color:var(--cr);font-family:'Plus Jakarta Sans',sans-s
 .tblock{display:flex;align-items:stretch;gap:0;margin-bottom:80px;border:1px solid var(--gx);transition:border-color .5s,box-shadow .5s}
 .tblock:hover{border-color:rgba(200,164,90,.32);box-shadow:0 12px 64px rgba(200,164,90,.07)}
 .tblock.rev{flex-direction:row-reverse}
-.tv{flex:0 0 46%;position:relative;min-height:420px;background:linear-gradient(150deg,#0d0600 0%,#1c1100 50%,#0a0500 100%);display:flex;align-items:center;justify-content:center;overflow:hidden;cursor:pointer}
+.tv{flex:0 0 52%;position:relative;min-height:480px;background:linear-gradient(150deg,#0d0600 0%,#1c1100 50%,#0a0500 100%);display:flex;align-items:center;justify-content:center;overflow:hidden;cursor:pointer}
 .tv::before{content:'';position:absolute;inset:0;background:
   radial-gradient(ellipse at 30% 40%,rgba(200,164,90,.09),transparent 55%),
   repeating-linear-gradient(0deg,transparent,transparent 79px,rgba(200,164,90,.025) 80px),
@@ -778,7 +778,7 @@ window.addEventListener('load',()=>{
   for(let i=0;i<10;i++){
     const m=new THREE.Mesh(
       new THREE.PlaneGeometry(60+Math.random()*50,20+Math.random()*15),
-      new THREE.MeshBasicMaterial({map:ht,transparent:true,opacity:.055+Math.random()*.06,depthWrite:false,side:THREE.DoubleSide,color:new THREE.Color(.35,.12,.02)})
+      new THREE.MeshBasicMaterial({map:ht,transparent:true,opacity:.07+Math.random()*.07,depthWrite:false,side:THREE.DoubleSide,color:new THREE.Color(.55,.22,.04),blending:THREE.AdditiveBlending})
     );
     m.position.set((Math.random()-.5)*30,-8+Math.random()*10,(Math.random()-.5)*15);
     m.rotation.x=-Math.PI/2+(Math.random()-.5)*.5;
@@ -827,20 +827,20 @@ window.addEventListener('load',()=>{
     const s=256,c=document.createElement('canvas');c.width=s;c.height=s;
     const ctx=c.getContext('2d');
     const g=ctx.createRadialGradient(s/2,s/2,0,s/2,s/2,s/2);
-    g.addColorStop(0,'rgba(255,230,120,1)');
-    g.addColorStop(.2,'rgba(200,140,30,.5)');
-    g.addColorStop(.55,'rgba(130,70,5,.12)');
+    g.addColorStop(0,'rgba(255,230,120,.62)');
+    g.addColorStop(.25,'rgba(200,140,30,.28)');
+    g.addColorStop(.55,'rgba(130,70,5,.07)');
     g.addColorStop(1,'rgba(0,0,0,0)');
     ctx.fillStyle=g;ctx.fillRect(0,0,s,s);
     return new THREE.CanvasTexture(c);
   }
   const bt=makeBloom();
-  const bloom=new THREE.Sprite(new THREE.SpriteMaterial({map:bt,transparent:true,opacity:.38,depthWrite:false,blending:THREE.AdditiveBlending,color:new THREE.Color(1,.82,.3)}));
-  bloom.scale.set(12,12,1);pg.add(bloom);
+  const bloom=new THREE.Sprite(new THREE.SpriteMaterial({map:bt,transparent:true,opacity:.22,depthWrite:false,blending:THREE.AdditiveBlending,color:new THREE.Color(1,.82,.3)}));
+  bloom.scale.set(10,10,1);pg.add(bloom);
 
   // outer bloom — very wide, very dim, just adds warmth
-  const bloom2=new THREE.Sprite(new THREE.SpriteMaterial({map:bt,transparent:true,opacity:.11,depthWrite:false,blending:THREE.AdditiveBlending,color:new THREE.Color(1,.65,.15)}));
-  bloom2.scale.set(32,32,1);pg.add(bloom2);
+  const bloom2=new THREE.Sprite(new THREE.SpriteMaterial({map:bt,transparent:true,opacity:.07,depthWrite:false,blending:THREE.AdditiveBlending,color:new THREE.Color(1,.65,.15)}));
+  bloom2.scale.set(28,28,1);pg.add(bloom2);
 
   // Orbit dots
   const oN=72,oG=new THREE.BufferGeometry();
@@ -890,9 +890,9 @@ window.addEventListener('load',()=>{
     fg.rotation.z=-now*.0003;
 
     // bloom pulse — softer to keep text readable
-    bloom.material.opacity=.32+Math.sin(now*.0008)*.08;
-    bloom.scale.setScalar(12+Math.sin(now*.0007)*1.4);
-    bloom2.material.opacity=.09+Math.sin(now*.0006)*.03;
+    bloom.material.opacity=.18+Math.sin(now*.0008)*.06;
+    bloom.scale.setScalar(10+Math.sin(now*.0007)*1.2);
+    bloom2.material.opacity=.055+Math.sin(now*.0006)*.02;
 
     // point light pulse
     pl.intensity=4.5+Math.sin(now*.0009)*1.5;
