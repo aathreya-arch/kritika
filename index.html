@@ -276,10 +276,18 @@ body{background:var(--bg);color:var(--cr);font-family:'Plus Jakarta Sans',sans-s
 #vmod{display:none;position:fixed;inset:0;z-index:99990;align-items:center;justify-content:center}
 #vmod.open{display:flex}
 #vmod-bg{position:absolute;inset:0;background:rgba(2,1,0,.88);backdrop-filter:blur(6px);cursor:pointer}
-#vmod-inner{position:relative;z-index:1;width:min(calc(88vh * 9 / 16), 90vw);aspect-ratio:9/16}
-#vmod-inner iframe{width:100%;height:100%;border:none;display:block}
+#vmod-inner{position:relative;z-index:1;width:min(calc(88vh * 9 / 16), 90vw)}
+#vmod-wrap{position:relative;width:100%;padding-top:177%}
+#vmod-wrap iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none;display:block}
 #vmod-close{position:absolute;top:-38px;right:0;background:none;border:1px solid rgba(200,164,90,.35);color:var(--g);font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.2em;padding:6px 14px;cursor:pointer;transition:border-color .2s}
 #vmod-close:hover{border-color:rgba(200,164,90,.7)}
+
+/* ── testimonial avatar ── */
+.t-byline{display:flex;align-items:center;gap:14px;margin-top:32px}
+.t-avatar{width:44px;height:44px;border-radius:50%;border:1px solid rgba(200,164,90,.35);object-fit:cover;flex-shrink:0;background:linear-gradient(135deg,#1a1000,#0a0600)}
+.t-info{display:flex;flex-direction:column;gap:5px}
+.tn{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.26em;color:var(--g);text-transform:uppercase}
+.tr{font-family:'Plus Jakarta Sans',sans-serif;font-weight:300;font-size:.78rem;color:rgba(237,228,208,.38)}
 
 /* ── price box ── */
 .pbox{max-width:540px;margin:64px auto 0;position:relative;border:1px solid rgba(200,164,90,.16);background:linear-gradient(170deg,#070400,#020100);padding:clamp(36px,6vw,60px) clamp(28px,5vw,52px);text-align:center}
@@ -484,26 +492,38 @@ footer{text-align:center;padding:48px 20px;font-family:'Cinzel',serif;font-size:
   <div style="margin-top:64px">
 
     <!-- Testimonial 1 — Leena (video left) -->
-    <div class="tblock R" data-vid="tbn3FFqumzI">
+    <div class="tblock R" data-vimeo="1202336699" data-padding="176.67">
       <div class="tv" aria-label="Play Leena's testimonial video">
         <div class="pb-ring"></div>
         <div class="pb"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
       </div>
       <div class="tcon">
-        <p class="tq">I had been in therapy for years working on one particular pattern. On day three we found the soul contract underneath it — an agreement made lifetimes ago that I had never even known was there. That one session reached somewhere therapy never could.</p>
-        <p class="tn">Leena</p><p class="tr">Soul Records Student</p>
+        <p class="tq">My first Akashic reading with Kritika was about a year and a half ago, and something in me shifted almost immediately. What she revealed, and the way she said it, made me trust her completely, and the work she pointed me toward made me a better person. That shift is exactly why I decided I wanted to learn how to read my own records from her.</p>
+        <div class="t-byline">
+          <img class="t-avatar" src="" alt="Leena" onerror="this.style.display='none'">
+          <div class="t-info">
+            <span class="tn">Leena</span>
+            <span class="tr">Soul Records Student</span>
+          </div>
+        </div>
       </div>
     </div>
 
     <!-- Testimonial 2 — Linnet (video right) -->
-    <div class="tblock rev R" data-vid="pP3lhdU5Jxg">
+    <div class="tblock rev R" data-vimeo="1202336700" data-padding="177.78">
       <div class="tv" aria-label="Play Linnet's testimonial video">
         <div class="pb-ring"></div>
         <div class="pb"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
       </div>
       <div class="tcon">
-        <p class="tq">I cried for an hour after meeting my Council. Not because it was overwhelming. Because somewhere in me, I had always known they were there. I just had never had a language for it before.</p>
-        <p class="tn">Linnet</p><p class="tr">Soul Records Student</p>
+        <p class="tq">My first Akashic session with Kritika frustrated me so much I didn't want to speak to her again. She was blunt, she held up a mirror, and it took me almost two months to understand what she'd shown me. Once I did the self-work that came out of it, I realized she was exactly the right person to learn from, because of her, something that had been blocking my path to success finally shifted.</p>
+        <div class="t-byline">
+          <img class="t-avatar" src="" alt="Linnet" onerror="this.style.display='none'">
+          <div class="t-info">
+            <span class="tn">Linnet</span>
+            <span class="tr">Soul Records Student</span>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -515,7 +535,7 @@ footer{text-align:center;padding:48px 20px;font-family:'Cinzel',serif;font-size:
   <div id="vmod-bg"></div>
   <div id="vmod-inner">
     <button id="vmod-close" aria-label="Close video">CLOSE ✕</button>
-    <iframe id="vmod-frame" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    <div id="vmod-wrap"></div>
   </div>
 </div>
 
@@ -938,29 +958,37 @@ window.addEventListener('load',()=>{
 })();
 </script>
 
+<script src="https://player.vimeo.com/api/player.js"></script>
 <script>
 (function(){
   var mod=document.getElementById('vmod');
-  var frame=document.getElementById('vmod-frame');
+  var wrap=document.getElementById('vmod-wrap');
   var bg=document.getElementById('vmod-bg');
   var closeBtn=document.getElementById('vmod-close');
 
-  function openVideo(vid){
-    frame.src='https://www.youtube.com/embed/'+vid+'?autoplay=1&rel=0&modestbranding=1';
+  function openVideo(vimeoId,padding){
+    wrap.innerHTML='<div style="padding:'+padding+'% 0 0 0;position:relative;">'
+      +'<iframe src="https://player.vimeo.com/video/'+vimeoId
+      +'?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1" '
+      +'frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" '
+      +'referrerpolicy="strict-origin-when-cross-origin" '
+      +'style="position:absolute;top:0;left:0;width:100%;height:100%;" '
+      +'title="Testimonial video"></iframe></div>';
     mod.classList.add('open');
     document.body.style.overflow='hidden';
   }
   function closeVideo(){
     mod.classList.remove('open');
-    frame.src='';
+    wrap.innerHTML='';
     document.body.style.overflow='';
   }
 
   document.querySelectorAll('.tblock').forEach(function(block){
     var tv=block.querySelector('.tv');
-    var vid=block.dataset.vid;
+    var vid=block.dataset.vimeo;
+    var pad=block.dataset.padding||'177.78';
     if(tv&&vid){
-      tv.addEventListener('click',function(){ openVideo(vid); });
+      tv.addEventListener('click',function(){ openVideo(vid,pad); });
     }
   });
 
